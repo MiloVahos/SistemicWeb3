@@ -1,0 +1,11 @@
+<h1 class="animated fadeIn">Books</h1>
+<hr>
+
+<ul class="list-group">
+  <li 
+    *ngFor="let book of books | async" 
+    class="list-group-item">
+      Book Title: {{ book.title | capitalizado }}, Editorial: {{ book.editorial | capitalizado }}, 
+      Year: {{ book.year }}, Authors: {{ book.author | autores}}
+  </li>
+</ul>

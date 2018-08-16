@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  
+  <a class="navbar-brand" href="#">Sistemic Publications</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+          data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['home']">Home</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['admin']">Admin</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['about']">About</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" 
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+           Publication Type
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="['any']">Any</a>
+          <a class="dropdown-item" [routerLink]="['book']">Book</a>
+          <a class="dropdown-item" [routerLink]="['chapter']">Book Chapter</a>
+          <a class="dropdown-item" [routerLink]="['journal']">Journal Articles</a>
+          <a class="dropdown-item" [routerLink]="['conference']">Conference Articles</a>
+          <a class="dropdown-item" [routerLink]="['prtotypes']">Prototypes</a>
+          <a class="dropdown-item" [routerLink]="['software']">Software</a>
+          <div class="dropdown-divider"></div>
+          <a><b><i>Thesis</i></b></a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" [routerLink]="['thesis/:undergraduated']">Undergraduated</a>
+          <a class="dropdown-item" [routerLink]="['thesis/:master']">Master</a>
+          <a class="dropdown-item" [routerLink]="['home/:phd']">PhD</a>
+        </div>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['team']">Our Team</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['about']">About us</a>
+      </li>
+    </ul>
+
+    <div class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search by Author" 
+             (keyup.enter) = "authorSearch(searchAuthor.value)" #searchAuthor >
+      <button (click)="authorSearch(searchAuthor.value)"
+              class="btn btn-outline-success outline-primary my-2 my-sm-0" 
+              type="button">Buscar
+      </button>
+    </div>
+  </div>
+</nav>
