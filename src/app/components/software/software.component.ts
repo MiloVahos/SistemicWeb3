@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-software',
   templateUrl: './software.component.html',
   styleUrls: ['./software.component.css']
 })
-export class SoftwareComponent implements OnInit {
+export class SoftwareComponent {
 
-  constructor() { }
+  softwares: Observable<any[]>;
 
-  ngOnInit() {
+  constructor(db: AngularFirestore) {
+    this.softwares = db.collection('SOFTWARE').valueChanges();
   }
 
 }

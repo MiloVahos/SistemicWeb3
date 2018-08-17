@@ -1,0 +1,43 @@
+<h1 class="animated fadeIn">Out Team</h1>
+<hr>
+
+<div class="row animated fadeIn addbutton">
+  <div class="col-md-12 text-right">
+    <button [routerLink]="['/addAuthor']"
+            class="btn btn-outline-primary"
+            type="button" name="button">
+      Add author
+    </button>
+  </div>
+</div>
+
+<div class="row animated fadeIn fast">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-dark">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Membership</th>
+            <th scope="col">Email</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let author of authors | async" >
+            <th scope="row"></th>
+            <td>{{ author.name | capitalizado }}</td>
+            <td>{{ author.membership | capitalizado }}</td>
+            <td>{{ author.email }}</td>
+            <td><button type="button" class="btn btn-outline-warning btn-sm">Update</button></td>
+            <td><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

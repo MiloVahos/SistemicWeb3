@@ -14,9 +14,6 @@
         <a class="nav-link" [routerLink]="['home']">Home</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['admin']">Admin</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['about']">About</a>
       </li>
       <li class="nav-item dropdown">
@@ -28,16 +25,11 @@
           <a class="dropdown-item" [routerLink]="['any']">Any</a>
           <a class="dropdown-item" [routerLink]="['book']">Book</a>
           <a class="dropdown-item" [routerLink]="['chapter']">Book Chapter</a>
-          <a class="dropdown-item" [routerLink]="['journal']">Journal Articles</a>
           <a class="dropdown-item" [routerLink]="['conference']">Conference Articles</a>
-          <a class="dropdown-item" [routerLink]="['prtotypes']">Prototypes</a>
+          <a class="dropdown-item" [routerLink]="['journal']">Journal Articles</a>
+          <a class="dropdown-item" [routerLink]="['prototypes']">Prototypes</a>
           <a class="dropdown-item" [routerLink]="['software']">Software</a>
-          <div class="dropdown-divider"></div>
-          <a><b><i>Thesis</i></b></a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" [routerLink]="['thesis/:undergraduated']">Undergraduated</a>
-          <a class="dropdown-item" [routerLink]="['thesis/:master']">Master</a>
-          <a class="dropdown-item" [routerLink]="['home/:phd']">PhD</a>
+          <a class="dropdown-item" [routerLink]="['thesis']">Thesis</a>
         </div>
       </li>
       <li class="nav-item" routerLinkActive="active">

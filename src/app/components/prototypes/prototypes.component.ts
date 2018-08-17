@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-prototypes',
   templateUrl: './prototypes.component.html',
   styleUrls: ['./prototypes.component.css']
 })
-export class PrototypesComponent implements OnInit {
+export class PrototypesComponent {
 
-  constructor() { }
+  prototypes: Observable<any[]>;
 
-  ngOnInit() {
+  constructor(db: AngularFirestore) {
+    this.prototypes = db.collection('PROTOTYPES').valueChanges();
   }
 
 }

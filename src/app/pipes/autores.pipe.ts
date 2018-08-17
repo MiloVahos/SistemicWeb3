@@ -10,19 +10,19 @@ export class AutoresPipe implements PipeTransform {
         value = value.toLowerCase();
 
         let autores = value.split(',');
-        let autoresArray = new Array<string>;
         let autor: string;
+        let autoresArray: Array<string> = [];
 
-        for( let i in autores ) {
-            let nombre = autores[i].split(" ");
-            for( let j in nombre){
+        for ( let i = 0; i < autores.length; i++ ) {
+            let nombre = autores[i].split(' ');
+            for ( let j = 0; j < nombre.length; j++ ) {
                 nombre[j] = nombre[j][0].toUpperCase() + nombre[j].substr(1);
             }
-            autor = nombre.join(" ");
+            autor = nombre.join(' ');
             autoresArray.push(autor);
         }
-
         return autoresArray.join(" , ");
     }
 
 }
+

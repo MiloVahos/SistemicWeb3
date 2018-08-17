@@ -1,11 +1,32 @@
 <h1 class="animated fadeIn">Books</h1>
 <hr>
 
-<ul class="list-group">
+<table class="table table-sm table-dark">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th scope="col">Book Title</th>
+      <th scope="col">Editorial</th>
+      <th scope="col">Year</th>
+      <th scope="col">Author</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of books | async" >
+      <th scope="row"></th>
+      <td>{{ book.title | capitalizado }}</td>
+      <td>{{ book.editorial | capitalizado }}</td>
+      <td>{{ book.year }}</td>
+      <td>{{ book.author | autores}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- <ul class="list-group">
   <li 
     *ngFor="let book of books | async" 
     class="list-group-item">
       Book Title: {{ book.title | capitalizado }}, Editorial: {{ book.editorial | capitalizado }}, 
       Year: {{ book.year }}, Authors: {{ book.author | autores}}
   </li>
-</ul>
+</ul> -->

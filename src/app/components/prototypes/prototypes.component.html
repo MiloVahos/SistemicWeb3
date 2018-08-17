@@ -1,3 +1,27 @@
-<p>
-  prototypes works!
-</p>
+<h1 class="animated fadeIn">Prototypes</h1>
+<hr>
+
+<table class="table table-sm table-dark">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th scope=col>Title</th>
+      <th scope=col>Availability</th>
+      <th scope=col>Institution</th>
+      <th scope=col>Year</th>
+      <th scope=col>Author</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prototype of prototypes | async" >
+      <th scope="row"></th>
+      <td>{{ prototype.title | capitalizado }}</td>
+      <td>{{ prototype.availability | capitalizado }}</td>
+      <td>{{ prototype.institution | capitalizado }}</td>
+      <td>{{ prototype.year }}</td>
+      <td>{{ prototype.author | autores}}</td>
+    </tr>
+  </tbody>
+</table>
+
+

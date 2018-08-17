@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class BookComponent {
 
   books: Observable<any[]>;
-
+  
   constructor(db: AngularFirestore) {
     this.books = db.collection('BOOKS').valueChanges();
   }

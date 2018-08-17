@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-conference',
   templateUrl: './conference.component.html',
   styleUrls: ['./conference.component.css']
 })
-export class ConferenceComponent implements OnInit {
+export class ConferenceComponent {
 
-  constructor() { }
+  conferences: Observable<any[]>;
 
-  ngOnInit() {
+  constructor(db: AngularFirestore) {
+    this.conferences = db.collection('CONFERENCES').valueChanges();
   }
 
 }

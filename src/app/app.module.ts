@@ -30,6 +30,8 @@ import { PrototypesComponent } from './components/prototypes/prototypes.componen
 import { SoftwareComponent } from './components/software/software.component';
 import { ThesisComponent } from './components/thesis/thesis.component';
 import { AddBookComponent } from './components/add/add-book/add-book.component';
+import { AuthorComponent } from './components/author/author.component';
+import { AddAuthorComponent } from './components/add/add-author/add-author.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { AddBookComponent } from './components/add/add-book/add-book.component';
     ThesisComponent,
     AddBookComponent,
     CapitalizadoPipe,
-    AutoresPipe
+    AutoresPipe,
+    AuthorComponent,
+    AddAuthorComponent
   ],
   imports: [
     BrowserModule,

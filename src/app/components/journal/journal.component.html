@@ -1,3 +1,29 @@
-<p>
-  journal works!
-</p>
+<h1 class="animated fadeIn">Journal Articles</h1>
+<hr>
+
+<table class="table table-sm table-dark">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th scope=col>Title</th>
+      <th scope=col>Journal</th>
+      <th scope=col>Pages</th>
+      <th scope=col>Volume</th>
+      <th scope=col>Year</th>
+      <th scope=col>Author</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let journal of journals | async" >
+      <th scope="row"></th>
+      <td>{{ journal.title | capitalizado }}</td>
+      <td>{{ journal.journal | capitalizado }}</td>
+      <td>{{ journal.pages | capitalizado }}</td>
+      <td>{{ journal.volume }}</td>
+      <td>{{ journal.year }}</td>
+      <td>{{ journal.author | autores}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
