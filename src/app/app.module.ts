@@ -12,9 +12,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 // RUTAS
 import { APP_ROUTING } from './app.router';
 
-// SERVICIOS
-import { BookService } from './services/book.service';
-
 // PIPES
 import { CapitalizadoPipe } from './pipes/capitalizado.pipe';
 import { AutoresPipe } from './pipes/autores.pipe';
@@ -57,10 +54,10 @@ import { AddAuthorComponent } from './components/add/add-author/add-author.compo
     HttpModule,
     APP_ROUTING,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule
   ],
-  providers: [BookService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

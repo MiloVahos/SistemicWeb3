@@ -1,3 +1,107 @@
-<p>
-  add-author works!
-</p>
+<h3 class="animated fadeIn">Add new author</h3>
+<hr class="my-4">
+<form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
+
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-2 col-form-label">Full Name:</label>
+    <div class="col-8">
+
+      <input class="form-control"
+             [ngClass]="{ 'is-invalid': (name.errors?.required || name.errors?.minlength) && name.touched }"
+             type="text"
+             placeholder="Author Full Name"
+             name="name"
+             [(ngModel)]="author.name"
+             minlength="10"
+             required
+             #name="ngModel">
+      <div *ngIf="name.errors?.required"
+            class="invalid-feedback">
+          This field is required
+      </div>
+      <div *ngIf="name.errors?.minlength"
+            class="invalid-feedback">
+          This field requieres at least {{ name.errors.minlength.requiredLength }} characters
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Email:</label>
+    <div class="col-8">
+
+      <input class="form-control"
+             [ngClass]="{ 'is-invalid': email.errors?.pattern && email.touched }"
+             type="text"
+             placeholder="Email"
+             name="email"
+             [(ngModel)]="author.email"
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+             #email="ngModel">
+      <div *ngIf="email.errors?.pattern"
+          class="invalid-feedback">
+        Doesn´t match the pattern
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Membership:</label>
+    <div class="col-md-8">
+
+      <select [(ngModel)]="author.membership"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': membership.errors?.required && membership.touched }"
+              name="membership"
+              required
+              #membership="ngModel">
+        <option *ngFor="let member of membershipTypes"
+          [value]="member.type"> {{ member.type }} </option>
+      </select>
+
+
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Availability:</label>
+    <div class="col-md-8">
+  
+      <div class="custom-control custom-checkbox">
+        <input  [(ngModel)]="author.availability"
+                name="availability"
+                type="checkbox" 
+                class="custom-control-input" 
+                id="customCheck1">
+        <label class="custom-control-label" for="customCheck1">Check if author is available </label>
+      </div>
+  
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button [disabled]="!forma.valid"
+              type="submit" 
+              class="btn btn-outline-primary">
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group animated fadeIn" role="alert" *ngIf="success">
+    <div class="alert alert-success">
+      <strong>Success!</strong> Data saved!
+    </div>  
+  </div>
+  <div class="form-group animated fadeIn" role="alert"  *ngIf="danger">
+    <div class="alert alert-danger">
+      <strong>Error!</strong> Something went wrong with the database.
+    </div>
+  </div>
+
+</form>
+
