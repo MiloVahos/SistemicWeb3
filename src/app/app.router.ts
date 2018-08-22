@@ -22,6 +22,7 @@ const APP_ROUTES: Routes = [
     { path: 'thesis', component: ThesisComponent },
     { path: 'team', component: AuthorComponent },
     { path: 'addAuthor', component: AddAuthorComponent },
+    { path: 'addBook', component: AddBookComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

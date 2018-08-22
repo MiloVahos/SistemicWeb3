@@ -2,7 +2,8 @@ import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // FIREBASE
 import { AngularFireModule } from 'angularfire2';
@@ -16,6 +17,8 @@ import { APP_ROUTING } from './app.router';
 import { CapitalizadoPipe } from './pipes/capitalizado.pipe';
 import { AutoresPipe } from './pipes/autores.pipe';
 
+// SERVICES
+
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/shared/nav-bar/nav-bar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -26,9 +29,9 @@ import { ConferenceComponent } from './components/conference/conference.componen
 import { PrototypesComponent } from './components/prototypes/prototypes.component';
 import { SoftwareComponent } from './components/software/software.component';
 import { ThesisComponent } from './components/thesis/thesis.component';
-import { AddBookComponent } from './components/add/add-book/add-book.component';
 import { AuthorComponent } from './components/author/author.component';
 import { AddAuthorComponent } from './components/add/add-author/add-author.component';
+import { AddBookComponent } from './components/add/add-book/add-book.component';
 
 @NgModule({
   declarations: [
@@ -42,17 +45,19 @@ import { AddAuthorComponent } from './components/add/add-author/add-author.compo
     PrototypesComponent,
     SoftwareComponent,
     ThesisComponent,
-    AddBookComponent,
     CapitalizadoPipe,
     AutoresPipe,
     AuthorComponent,
-    AddAuthorComponent
+    AddAuthorComponent,
+    AddBookComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     APP_ROUTING,
+    NgbTypeaheadModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule

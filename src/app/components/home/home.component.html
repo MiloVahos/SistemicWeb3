@@ -1,37 +1,4 @@
 <div class="jumbotron panel-margin">
     <h4 class="display-8">Sistemic Publications Database</h4>
     <p class="display-10">This is our query panel, hope you can find what you are looking for.</p>
-    <hr class="my-4">
-    <form>
-        <div class="form-group">
-            <label for="exampleSelect2">Select Document Type</label>
-            <select class="form-control" id="TypeSelect">
-                <option value="Any">Any</option>
-                <option value="Book">Book</option>
-                <option value="BookChapter">Book Chapter</option>
-                <option value="Prototype">Prototypes</option>
-                <option value="Software">Software</option>
-                <option value="Journal">Journal Article</option>
-                <option value="Conference">Conference Article</option>
-                <option value="Thesis">Thesis</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="exampleSelect2">Select Filter Type</label>
-            <select class="form-control" id="FiltSelect"> 
-                <option value="author">Author</option>                   
-                <option value="title">Title</option>
-                <option value="year">Year</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">NEXT</button>
-
-        <!--INVISIBLE TILL BUTTON NEXT IS PRESSED-->
-        <div ng-show="state" >
-            <input class="form-control mr-sm-2 query-panel-margin" 
-                   id="tags" type="search" placeholder="Search" aria-label="Search">
-            <a class="btn btn-warning query-panel-margin">SEND</a>
-        </div>
-      </form>
 </div>

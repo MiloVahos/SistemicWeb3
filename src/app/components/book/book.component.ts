@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 export class BookComponent {
 
   books: Observable<any[]>;
-  
   constructor(db: AngularFirestore) {
     this.books = db.collection('BOOKS').valueChanges();
   }

@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
 import { Author } from '../../../interfaces/author.interface';
 
 
 @Component({
   selector: 'app-add-author',
-  templateUrl: './add-author.component.html',
-  styleUrls: ['./add-author.component.css']
+  templateUrl: './add-author.component.html'
 })
 export class AddAuthorComponent {
 
