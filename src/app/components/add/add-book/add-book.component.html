@@ -62,17 +62,12 @@
                     class="form-control"
                     required>
             <div class="animated fadeIn fast row control-buttons">
-                <button (click)="addAuthor()"
-                        style="margin-right: 5px"
-                        type="button" 
-                        class="btn btn-primary">
-                    New
-                </button>
-                <button (click)="removeAuthor(i)"
-                        type="button" 
-                        class="btn btn-danger">
-                    Remove           
-                </button>
+                <a class="btn" (click)="addAuthor()">
+                    <i class="icon-plus"></i>
+                </a>
+                <a class="btn" (click)="removeAuthor(i)">
+                    <i class="icon-minus-sign-alt"></i>
+                </a>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-book',
@@ -12,6 +13,7 @@ export class BookComponent {
   list: boolean = false;
   code: boolean = false;
   column: boolean = true;
+  complete: boolean = false;
 
   books: Observable<any[]>;
   constructor(db: AngularFirestore) {

@@ -19,6 +19,15 @@
     <a class="btn" (click)="codeView()">
       <i class="icon-code"></i>
     </a>
+    <div class="custom-control custom-checkbox">
+        <input  [(ngModel)]="complete"
+                name="complete"
+                type="checkbox" 
+                class="custom-control-input" 
+                id="customCheck1"
+                required>
+        <label class="custom-control-label" for="customCheck1">See All Info</label>
+      </div>
   </div>
 
 
@@ -29,7 +38,7 @@
     <tr>
       <th>#</th>
       <th scope="col">Book Title</th>
-      <th scope="col">Editorial</th>
+      <th scope="col" *ngIf="complete">Editorial</th>
       <th scope="col">Year</th>
       <th scope="col">Author</th>
     </tr>
@@ -39,7 +48,7 @@
         *ngFor="let book of books | async" >
       <th scope="row"></th>
       <td>{{ book.title | capitalizado }}</td>
-      <td>{{ book.editorial | capitalizado }}</td>
+      <td *ngIf="complete">{{ book.editorial | capitalizado }}</td>
       <td>{{ book.year }}</td>
       <td>{{ book.author | autores }}</td>
     </tr>
