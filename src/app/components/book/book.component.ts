@@ -9,6 +9,10 @@ import { Observable } from 'rxjs';
 })
 export class BookComponent {
 
+  list: boolean = false;
+  code: boolean = false;
+  column: boolean = true;
+
   books: Observable<any[]>;
   constructor(db: AngularFirestore) {
     this.books = db.collection('BOOKS').valueChanges();
@@ -17,6 +21,24 @@ export class BookComponent {
         console.log(book.author);
       });
     });*/
+  }
+
+  listView() {
+    this.list = true;
+    this.code = false;
+    this.column = false;
+  }
+
+  columsView() {
+    this.list = false;
+    this.code = false;
+    this.column = true;
+  }
+
+  codeView() {
+    this.list = false;
+    this.code = true;
+    this.column = false;
   }
 
 }

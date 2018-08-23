@@ -9,9 +9,22 @@
       Manage Books
     </button>
   </div>
+  <div class="col-md-12 text-right">
+    <a class="btn" (click)="listView()">
+      <i class="icon-list-ol"></i>
+    </a>
+    <a class="btn" (click)="columsView()">
+      <i class="icon-columns"></i>
+    </a>
+    <a class="btn" (click)="codeView()">
+      <i class="icon-code"></i>
+    </a>
+  </div>
+
+
 </div>
 
-<table class="table table-sm table-dark animated fadeIn">
+<table class="table table-sm table-dark animated fadeIn" *ngIf="column">
   <thead>
     <tr>
       <th>#</th>
@@ -33,11 +46,29 @@
   </tbody>
 </table>
 
-<!-- <ul class="list-group">
+<table class="table table-sm table-dark animated fadeIn" *ngIf="list">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th scope="col">Information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="animated fadeIn"
+        *ngFor="let book of books | async" >
+      <th scope="row"></th>
+      <td>Book Title: {{ book.title | capitalizado }}, 
+          Editorial: {{ book.editorial | capitalizado }}, 
+          Year: {{ book.year }}, Authors: {{ book.author | autores }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ul class="list-group" *ngIf="code">
   <li 
     *ngFor="let book of books | async" 
     class="list-group-item">
-      Book Title: {{ book.title | capitalizado }}, Editorial: {{ book.editorial | capitalizado }}, 
-      Year: {{ book.year }}, Authors: {{ book.author | autores}}
+      <pre>{{ book | json }}</pre>
   </li>
-</ul> -->
+</ul>
