@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable, timer } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Author } from '../../../interfaces/author.interface';
 import { Book } from '../../../interfaces/book.interface';
 
@@ -15,13 +15,15 @@ export class AddBookComponent implements OnInit {
 
   forma: FormGroup;
 
-  success: boolean;
-  danger: boolean;
+  showSuccess$: Observable<boolean>;
+  showError$: Observable<boolean>;
+
+  public currentYear = new Date().getFullYear();
 
   book: Object = {
     title: '',
     editorial: '',
-    year: '',
+    year: null,
     authors: []
   };
 
@@ -42,19 +44,19 @@ export class AddBookComponent implements OnInit {
     this.forma = new FormGroup({
       'title':      new FormControl( '', Validators.required ),
       'editorial':  new FormControl( '', Validators.required ),
-      'year':       new FormControl( '', Validators.required ),
+      'year':       new FormControl( null, [Validators.required,
+                                            Validators.min(1990),
+                                            Validators.max(this.currentYear)] ),
       'authors':    new FormArray([ new FormControl('', Validators.required ) ])
     });
   }
 
   ngOnInit() {
-
     this.authors.subscribe(authors => {
       authors.forEach(author => {
         this.authorsNames.push(author.name);
       });
     });
-
   }
 
 
@@ -64,23 +66,42 @@ export class AddBookComponent implements OnInit {
     );
   }
 
+  removeAuthor( i: number ) {
+    (<FormArray>this.forma.controls['authors']).removeAt(i);
+  }
+
   saveBook() {
 
-    const authors: string = this.forma.value.authors.join(' , ');
+    const authorList: string[] = this.forma.value.authors;
 
-    this.BooksColRef.add({
+    const book: Book = {
+
       title:      this.forma.value.title,
       editorial:  this.forma.value.editorial,
-      year:       this.forma.value.year,
-      author:     authors
-    }).then(function(forma) {
-      this.forma.reset({
-        title: '',
-        editorial: '',
-        year: '',
-        authors: []
-      });
+      year:       this.forma.value.year.toString(),
+      author:     this.forma.value.authors.join(' , ')
+
+    };
+
+    this.BooksColRef.add(book).then((result) => {
+      for ( let i = 0; i < authorList.length; i++ ) {
+        this.AuthorsColRef.doc(authorList[i]).collection('BOOKS').add(book);
+      }
+      this.showSuccess$ = timer(200).pipe( map(() => true), share() );
+    })
+    .catch((err) => {
+      this.showError$ = timer(200).pipe( map(() => true), share() );
     });
+
+    this.forma.reset({
+      title: '',
+      editorial: '',
+      year: ''
+    });
+    this.forma.controls['authors'].reset();
+    while ((<FormArray>this.forma.controls['authors']).length !== 1) {
+      (<FormArray>this.forma.controls['authors']).removeAt(0);
+    }
   }
 
   search = (text$: Observable<string>) =>

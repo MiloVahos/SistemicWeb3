@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { Author } from '../../../interfaces/author.interface';
 import { Observable } from 'rxjs';
 import { timer } from 'rxjs';
-import { map, share, tap } from 'rxjs/operators';
+import { map, share } from 'rxjs/operators';
 
 
 @Component({

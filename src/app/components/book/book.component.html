@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<table class="table table-sm table-dark">
+<table class="table table-sm table-dark animated fadeIn">
   <thead>
     <tr>
       <th>#</th>
@@ -22,12 +22,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let book of books | async" >
+    <tr class="animated fadeIn"
+        *ngFor="let book of books | async" >
       <th scope="row"></th>
       <td>{{ book.title | capitalizado }}</td>
       <td>{{ book.editorial | capitalizado }}</td>
       <td>{{ book.year }}</td>
-      <td>{{ book.author | autores}}</td>
+      <td>{{ book.author | autores }}</td>
     </tr>
   </tbody>
 </table>

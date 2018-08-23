@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.control-buttons{
+    margin-top: 5px;
+}
+
 .addbutton{
     margin-bottom: 10px;
 }

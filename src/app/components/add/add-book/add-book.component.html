@@ -35,35 +35,46 @@
     <div class="form-group row animated fadeIn fast">
         <label class="col-2 col-form-label">Year:</label>
         <div class="col-8">
-                <input [ngClass]="{ 'is-invalid': forma.get('year').invalid && forma.get('year').touched }"
-                class="form-control"
-                type="text"
-                placeholder="Publication Year"
-                formControlName="year">
+                <input  [ngClass]="{ 'is-invalid': forma.get('year').invalid && forma.get('year').touched }"
+                        class="form-control"
+                        type="number"
+                        placeholder="Publication Year"
+                        formControlName="year">
             <div  *ngIf="forma.controls['year'].errors?.required"
                 class="form-control-feedback invalid-feedback">
                 This field is required
             </div>
+            <div  *ngIf="forma.controls['year'].errors?.min || forma.controls['year'].errors?.max"
+                class="form-control-feedback invalid-feedback">
+                The year is between [1990 - Actual Year]
+            </div>
         </div>
     </div>
 
-    <div class="form-group row">
-        <label class="col-2 col-form-label">Authors</label>
-        <div class="col-md-8" formArrayName="authors">
-        
-            <input *ngFor="let author of forma.controls['authors'].controls; let i = index "
-                [ngbTypeahead]="search"
-                placeholder="Search Author"
-                [formControlName]="i"
-                type="text"
-                class="form-control"
-                required>
+    <div class="form-group row"
+         *ngFor="let author of forma.controls['authors'].controls; let i = index ">
+        <label class="col-2 col-form-label">Author {{ i }}</label>
+        <div class="col-md-8" formArrayName="authors">       
+            <input  [ngbTypeahead]="search"
+                    placeholder="Search Author"
+                    [formControlName]="i"
+                    type="text"
+                    class="form-control"
+                    required>
+            <div class="animated fadeIn fast row control-buttons">
+                <button (click)="addAuthor()"
+                        style="margin-right: 5px"
+                        type="button" 
+                        class="btn btn-primary">
+                    New
+                </button>
+                <button (click)="removeAuthor(i)"
+                        type="button" 
+                        class="btn btn-danger">
+                    Remove           
+                </button>
+            </div>
         </div>
-        <button (click)="addAuthor()"
-                type="button" 
-                class="btn btn-primary">
-            New
-        </button>
     </div>
 
     <div class="form-group row">
@@ -76,6 +87,24 @@
                 Save Book
             </button>
         </div>
+    </div>
+
+    <div  class="alert alert-success alert-dismissible animated fadeIn" 
+        role="alert" 
+        *ngIf="showSuccess$ | async">
+        <strong>Success!</strong> Data saved!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div  class="alert alert-danger alert-dismissible animated fadeIn" 
+        role="alert" 
+        *ngIf="showError$ | async">
+        <strong>Error!</strong> Something went wrong with the database.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
 </form>

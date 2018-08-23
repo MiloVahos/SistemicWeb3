@@ -12,6 +12,11 @@ export class BookComponent {
   books: Observable<any[]>;
   constructor(db: AngularFirestore) {
     this.books = db.collection('BOOKS').valueChanges();
+    /*this.books.subscribe(books => {
+      books.forEach(book => {
+        console.log(book.author);
+      });
+    });*/
   }
 
 }
