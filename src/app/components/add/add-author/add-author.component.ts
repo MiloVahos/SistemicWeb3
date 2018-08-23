@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Author } from '../../../interfaces/author.interface';
+import { Observable } from 'rxjs';
+import { timer } from 'rxjs';
+import { map, share, tap } from 'rxjs/operators';
 
 
 @Component({
@@ -10,13 +13,13 @@ import { Author } from '../../../interfaces/author.interface';
 })
 export class AddAuthorComponent {
 
-  success: boolean;
-  danger: boolean;
+  showSuccess$: Observable<boolean>;
+  showError$: Observable<boolean>;
 
   author: Object = {
-    name: null,
-    email: null,
-    membership: null,
+    name: '',
+    email: '',
+    membership: '',
     availability: false
   };
 
@@ -42,18 +45,24 @@ export class AddAuthorComponent {
                   membership: forma.value.membership,
                   availability: forma.value.availability,
                   email: forma.value.email
-                }).then(function(docRef) {
-                  forma.reset();
+                }).then((result) => {
+                  this.showSuccess$ = timer(200).pipe( map(() => true), share() );
+                })
+                .catch((err) => {
+                  this.showError$ = timer(200).pipe( map(() => true), share() );
                 });
     } else {
       this.AuthorsColRef.doc(forma.value.name).set({
                   name: forma.value.name,
                   membership: forma.value.membership,
                   availability: forma.value.availability
-                }).then(function(docRef) {
-                  forma.reset();
+                }).then((result) => {
+                  this.showSuccess$ = timer(200).pipe( map(() => true), share() );
+                })
+                .catch((err) => {
+                  this.showError$ = timer(200).pipe( map(() => true), share() );
                 });
     }
-
+    forma.reset();
   }
 }

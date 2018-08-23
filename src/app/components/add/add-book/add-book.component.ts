@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
-import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Author } from '../../../interfaces/author.interface';
+import { Book } from '../../../interfaces/book.interface';
+
 
 @Component({
   selector: 'app-add-book',
@@ -16,9 +19,9 @@ export class AddBookComponent implements OnInit {
   danger: boolean;
 
   book: Object = {
-    title: null,
-    editorial: null,
-    year: null,
+    title: '',
+    editorial: '',
+    year: '',
     authors: []
   };
 
@@ -26,17 +29,15 @@ export class AddBookComponent implements OnInit {
   authors: Observable<any[]>;
   authorsNames: Array<string> = [];
 
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map(term => term.length < 2 ? []
-        : this.authorsNames.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-    )
+  AuthorsColRef: AngularFirestoreCollection<Author>;
+  BooksColRef: AngularFirestoreCollection<Book>;
 
-  constructor(db: AngularFirestore) {
+  constructor(private db: AngularFirestore) {
 
-    this.authors = db.collection('AUTHORS').valueChanges();
+    this.AuthorsColRef = this.db.collection<Author>('AUTHORS');
+    this.BooksColRef = this.db.collection<Book>('BOOKS');
+
+    this.authors = this.db.collection('AUTHORS').valueChanges();
 
     this.forma = new FormGroup({
       'title':      new FormControl( '', Validators.required ),
@@ -44,7 +45,6 @@ export class AddBookComponent implements OnInit {
       'year':       new FormControl( '', Validators.required ),
       'authors':    new FormArray([ new FormControl('', Validators.required ) ])
     });
-    
   }
 
   ngOnInit() {
@@ -65,8 +65,30 @@ export class AddBookComponent implements OnInit {
   }
 
   saveBook() {
-    console.log(this.book);
-    this.forma.reset();
+
+    const authors: string = this.forma.value.authors.join(' , ');
+
+    this.BooksColRef.add({
+      title:      this.forma.value.title,
+      editorial:  this.forma.value.editorial,
+      year:       this.forma.value.year,
+      author:     authors
+    }).then(function(forma) {
+      this.forma.reset({
+        title: '',
+        editorial: '',
+        year: '',
+        authors: []
+      });
+    });
   }
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term.length < 2 ? []
+        : this.authorsNames.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+    )
 
 }
