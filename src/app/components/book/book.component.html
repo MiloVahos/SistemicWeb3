@@ -1,36 +1,51 @@
 <h1 class="animated fadeIn">Books</h1>
 <hr>
 
-<div class="row animated fadeIn addbutton">
-  <div class="col-md-12 text-right">
-    <button [routerLink]="['/addBook']"
-            class="btn btn-outline-primary"
-            type="button" name="button">
-      Manage Books
-    </button>
-  </div>
-  <div class="col-md-12 text-right">
-    <a class="btn" (click)="listView()">
-      <i class="icon-list-ol"></i>
-    </a>
-    <a class="btn" (click)="columsView()">
-      <i class="icon-columns"></i>
-    </a>
-    <a class="btn" (click)="codeView()">
-      <i class="icon-code"></i>
-    </a>
-    <div class="custom-control custom-checkbox">
-        <input  [(ngModel)]="complete"
-                name="complete"
-                type="checkbox" 
-                class="custom-control-input" 
-                id="customCheck1"
-                required>
-        <label class="custom-control-label" for="customCheck1">See All Info</label>
+<div class="row">
+  <ul>
+    <input  class="form-control" 
+            type="text" placeholder="Filter by Title"
+            [(ngModel)]="searchTitle" name="searchTitle">
+  </ul>
+  <ul>
+    <input  class="form-control" 
+            type="text" placeholder="Filter by Year" 
+            [(ngModel)]="searchYear" name="searchYear">
+  </ul>
+  <ul>
+    <input  class="form-control" 
+            type="text" placeholder="Filter by Author" 
+            [(ngModel)]="searchAuthor" name="searchAuthor">
+  </ul>
+  <ul>
+    <div class="text-right">
+      <button [routerLink]="['/addBook']"
+              class="btn btn-outline-primary"
+              type="button" name="button">
+        Manage Books
+      </button>
+      <div class="col-md-12 text-right">
+        <a class="btn" (click)="listView()">
+          <i class="icon-list-ol"></i>
+        </a>
+        <a class="btn" (click)="columsView()">
+          <i class="icon-columns"></i>
+        </a>
+        <a class="btn" (click)="codeView()">
+          <i class="icon-code"></i>
+        </a>
+        <div class="custom-control custom-checkbox">
+            <input  [(ngModel)]="complete"
+                    name="complete"
+                    type="checkbox" 
+                    class="custom-control-input" 
+                    id="customCheck1"
+                    required>
+          <label class="custom-control-label" for="customCheck1">See All Info</label>
+        </div>
       </div>
-  </div>
-
-
+    </div>
+  </ul>
 </div>
 
 <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
@@ -45,7 +60,7 @@
   </thead>
   <tbody>
     <tr class="animated fadeIn"
-        *ngFor="let book of books | async" >
+        *ngFor="let book of (bookList | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
       <th scope="row"></th>
       <td>{{ book.title | capitalizado }}</td>
       <td *ngIf="complete">{{ book.editorial | capitalizado }}</td>
@@ -64,7 +79,7 @@
   </thead>
   <tbody>
     <tr class="animated fadeIn"
-        *ngFor="let book of books | async" >
+        *ngFor="let book of (bookList | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
       <th scope="row"></th>
       <td>Book Title: {{ book.title | capitalizado }}, 
           Editorial: {{ book.editorial | capitalizado }}, 
@@ -76,7 +91,7 @@
 
 <ul class="list-group" *ngIf="code">
   <li 
-    *ngFor="let book of books | async" 
+    *ngFor="let book of (bookList | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
     class="list-group-item">
       <pre>{{ book | json }}</pre>
   </li>

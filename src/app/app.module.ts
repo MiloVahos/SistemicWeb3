@@ -16,6 +16,9 @@ import { APP_ROUTING } from './app.router';
 // PIPES
 import { CapitalizadoPipe } from './pipes/capitalizado.pipe';
 import { AutoresPipe } from './pipes/autores.pipe';
+import { SearchByAuthorPipe } from './pipes/filter-authors.pipe';
+import { SearchByYearPipe } from './pipes/filter-year-pipe';
+import { SearchByTitlePipe } from './pipes/filter-title-pipe';
 
 // SERVICES
 
@@ -47,6 +50,9 @@ import { AddBookComponent } from './components/add/add-book/add-book.component';
     ThesisComponent,
     CapitalizadoPipe,
     AutoresPipe,
+    SearchByAuthorPipe,
+    SearchByTitlePipe,
+    SearchByYearPipe,
     AuthorComponent,
     AddAuthorComponent,
     AddBookComponent

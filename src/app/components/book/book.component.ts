@@ -1,28 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
-import { NgForm } from '@angular/forms';
+import { Book } from '../../interfaces/book.interface';
 
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.css']
 })
-export class BookComponent {
+export class BookComponent implements OnInit {
 
-  list: boolean = false;
-  code: boolean = false;
-  column: boolean = true;
-  complete: boolean = false;
+  list = false;
+  code = false;
+  column = true;
+  complete = false;
 
   books: Observable<any[]>;
+  bookList: Book[] = [];
+
   constructor(db: AngularFirestore) {
     this.books = db.collection('BOOKS').valueChanges();
-    /*this.books.subscribe(books => {
-      books.forEach(book => {
-        console.log(book.author);
+  }
+
+  ngOnInit() {
+
+    this.books.subscribe(books => {
+      books.forEach(book =>  {
+        this.bookList.push(book);
       });
-    });*/
+    });
+
   }
 
   listView() {

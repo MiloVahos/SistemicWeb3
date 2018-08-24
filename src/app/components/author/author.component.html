@@ -21,6 +21,7 @@
             <th scope="col">Name</th>
             <th scope="col">Membership</th>
             <th scope="col">Email</th>
+            <th scope="col">Available</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@
             <td>{{ author.name | capitalizado }}</td>
             <td>{{ author.membership | capitalizado }}</td>
             <td>{{ author.email }}</td>
+            <td><i class="icon-ok" *ngIf="author.availability"></i></td>
           </tr>
         </tbody>
       </table>
