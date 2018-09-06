@@ -21,7 +21,10 @@ import { SearchByYearPipe } from './pipes/filter-year-pipe';
 import { SearchByTitlePipe } from './pipes/filter-title-pipe';
 
 // SERVICES
+import { BooksService } from './services/books.service';
 
+
+// COMPONENTES
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/shared/nav-bar/nav-bar.component';
 import { HomeComponent } from './components/home/home.component';
@@ -68,7 +71,9 @@ import { AddBookComponent } from './components/add/add-book/add-book.component';
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [
+    BooksService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,126 @@
-<div class="jumbotron panel-margin">
-    <h4 class="display-8">Sistemic Publications Database</h4>
-    <p class="display-10">This is our query panel, hope you can find what you are looking for.</p>
+<h3>Sistemic Publications Database</h3>
+<hr>
+
+<div class="row">
+    <ul>
+        <div class="btn-group">
+            <button type="button" class="btn-sm btn-success dropdown-toggle" 
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Document Type
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item">Any</a>
+                <a class="dropdown-item">Book</a>
+                <a class="dropdown-item">Book Chapter</a>
+                <a class="dropdown-item">Conference Articles</a>
+                <a class="dropdown-item">Journal Articles</a>
+                <a class="dropdown-item">Prototypes</a>
+                <a class="dropdown-item">Software</a>
+                <a class="dropdown-item">Thesis</a>
+            </div>
+        </div>
+    </ul>
+    <ul>
+        <input  class="form-control-sm" 
+                type="text" placeholder="Filter by Title"
+                [(ngModel)]="searchTitle" name="searchTitle">
+    </ul>
+    <ul>
+        <input  class="form-control-sm has-success" 
+                type="text" placeholder="Filter by Year" 
+                [(ngModel)]="searchYear" name="searchYear">
+    </ul>
+    <ul>
+        <input  class="form-control-sm" 
+                type="text" placeholder="Filter by Author" 
+                [(ngModel)]="searchAuthor" name="searchAuthor">
+    </ul>
+    <ul>
+        <button class="btn-sm btn-success"
+                type="button" name="button">
+                Admin Login
+        </button>
+    </ul>
+    <ul>
+        <div class="text-right">
+            <div class="col-md-12 text-right">
+                <a class="btn" (click)="listView()">
+                    <i class="icon-list-ol"></i>
+                </a>
+                <a class="btn" (click)="columsView()">
+                    <i class="icon-columns"></i>
+                </a>
+                <a class="btn" (click)="codeView()">
+                    <i class="icon-code"></i>
+                </a>
+                <div class="custom-control custom-checkbox">
+                    <input  [(ngModel)]="complete"
+                            name="complete"
+                            type="checkbox" 
+                            class="custom-control-input" 
+                            id="customCheck1"
+                            required>
+                    <label class="custom-control-label" for="customCheck1">See All Info</label>
+                </div>
+            </div>
+        </div>
+    </ul>
+</div>
+
+<div>
+    <h4>Books</h4>
+    <hr>
+    <button [routerLink]="['/addBook']"
+            class="btn btn-outline-primary addbutton"
+            type="button" name="button">
+            Manage Books
+    </button>
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th scope="col">Book Title</th>
+            <th scope="col" *ngIf="complete">Editorial</th>
+            <th scope="col">Year</th>
+            <th scope="col">Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>{{ book.title | capitalizado }}</td>
+            <td *ngIf="complete">{{ book.editorial | capitalizado }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.author | autores }}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="list">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th scope="col">Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>Book Title: {{ book.title | capitalizado }}, 
+                Editorial: {{ book.editorial | capitalizado }}, 
+                Year: {{ book.year }}, Authors: {{ book.author | autores }}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <ul class="list-group" *ngIf="code">
+        <li 
+            *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            class="list-group-item">
+            <pre>{{ book | json }}</pre>
+        </li>
+    </ul>    
 </div>
