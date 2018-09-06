@@ -73,7 +73,7 @@
     <button [routerLink]="['/addBook']"
             class="btn btn-outline-primary addbutton"
             type="button" name="button">
-            Manage Books
+            Edit Books
     </button>
     <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
         <thead>
@@ -110,7 +110,8 @@
             <th scope="row"></th>
             <td>Book Title: {{ book.title | capitalizado }}, 
                 Editorial: {{ book.editorial | capitalizado }}, 
-                Year: {{ book.year }}, Authors: {{ book.author | autores }}
+                Year: {{ book.year }}, 
+                Authors: {{ book.author | autores }}
             </td>
             </tr>
         </tbody>
@@ -121,6 +122,71 @@
             *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
             class="list-group-item">
             <pre>{{ book | json }}</pre>
+        </li>
+    </ul>    
+</div>
+
+<div>
+    <h4>Books Chapters</h4>
+    <hr>
+    <button [routerLink]="['/addChapter']"
+            class="btn btn-outline-primary addbutton"
+            type="button" name="button">
+            Edit Book Chapters
+    </button>
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th>Book Title</th>
+            <th>Chapter Title</th>
+            <th *ngIf="complete">Editorial</th>
+            <th *ngIf="complete">Pages</th>
+            <th>Year</th>
+            <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>{{ chapter.title | capitalizado }}</td>
+            <td>{{ chapter.book | capitalizado }}</td>
+            <td *ngIf="complete">{{ chapter.editorial | capitalizado }}</td>
+            <td *ngIf="complete">{{ chapter.pages }}</td>
+            <td>{{ chapter.year }}</td>
+            <td>{{ chapter.author | autores }}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="list">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th scope="col">Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>Chapter Title: {{ chapter.title | capitalizado }}
+                Book Title: {{ chapter.book | capitalizado }}, 
+                Editorial: {{ chapter.editorial | capitalizado }}, 
+                Pages: {{ chapter.pages | capitalizado }}, 
+                Year: {{ chapter.year }}, 
+                Authors: {{ chapter.author | autores }}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <ul class="list-group" *ngIf="code">
+        <li 
+            *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            class="list-group-item">
+            <pre>{{ chapter | json }}</pre>
         </li>
     </ul>    
 </div>

@@ -28,7 +28,6 @@ import { BooksService } from './services/books.service';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/shared/nav-bar/nav-bar.component';
 import { HomeComponent } from './components/home/home.component';
-import { BookComponent } from './components/book/book.component';
 import { ChapterComponent } from './components/chapter/chapter.component';
 import { JournalComponent } from './components/journal/journal.component';
 import { ConferenceComponent } from './components/conference/conference.component';
@@ -38,13 +37,13 @@ import { ThesisComponent } from './components/thesis/thesis.component';
 import { AuthorComponent } from './components/author/author.component';
 import { AddAuthorComponent } from './components/add/add-author/add-author.component';
 import { AddBookComponent } from './components/add/add-book/add-book.component';
+import { AddChapterComponent } from './components/add/add-chapter/add-chapter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     HomeComponent,
-    BookComponent,
     ChapterComponent,
     JournalComponent,
     ConferenceComponent,
@@ -58,7 +57,8 @@ import { AddBookComponent } from './components/add/add-book/add-book.component';
     SearchByYearPipe,
     AuthorComponent,
     AddAuthorComponent,
-    AddBookComponent
+    AddBookComponent,
+    AddChapterComponent
   ],
   imports: [
     BrowserModule,
