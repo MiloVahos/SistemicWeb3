@@ -399,3 +399,133 @@
         </li>
     </ul>    
 </div>
+
+<div *ngIf="(docSelected === 'any') || (docSelected === 'software')">
+    <h4>Software</h4>
+    <hr>
+    <button [routerLink]="['/addSoftware']"
+            class="btn btn-outline-primary addbutton"
+            type="button" name="button">
+            Edit Software
+    </button>
+    
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Name</th>
+            <th *ngIf="complete">Availability</th>
+            <th *ngIf="complete">Institution</th>
+            <th>Year</th>
+            <th>Tutor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>{{ soft.title | capitalizado }}</td>
+            <td>{{ soft.name }}</td>
+            <td *ngIf="complete">{{ soft.availability }}</td>
+            <td *ngIf="complete">{{ soft.institution }}</td>
+            <td>{{ soft.year }}</td>
+            <td>{{ soft.author | autores }}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="list">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th scope="col">Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>Title: {{ soft.title | capitalizado }},
+                Comercial Name: {{ soft.name }}, 
+                Availability: {{ soft.availability }}, 
+                Institution: {{ soft.institution }}, 
+                Year: {{ soft.year }}, 
+                Authors: {{ soft.author | autores }}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <ul class="list-group" *ngIf="code">
+        <li 
+            *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            class="list-group-item">
+            <pre>{{ soft | json }}</pre>
+        </li>
+    </ul>    
+</div>
+
+
+<div *ngIf="(docSelected === 'any') || (docSelected === 'prototype')">
+    <h4>Prototypes</h4>
+    <hr>
+    <button [routerLink]="['/addPrototype']"
+            class="btn btn-outline-primary addbutton"
+            type="button" name="button">
+            Edit Prototypes
+    </button>
+    
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th *ngIf="complete">Availability</th>
+            <th *ngIf="complete">Institution</th>
+            <th>Year</th>
+            <th>Tutor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>{{ prototype.title | capitalizado }}</td>
+            <td *ngIf="complete">{{ prototype.availability }}</td>
+            <td *ngIf="complete">{{ prototype.institution }}</td>
+            <td>{{ prototype.year }}</td>
+            <td>{{ prototype.author | autores }}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="list">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th scope="col">Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>Title: {{ prototype.title | capitalizado }},
+                Availability: {{ prototype.availability }}, 
+                Institution: {{ prototype.institution }}, 
+                Year: {{ prototype.year }}, 
+                Authors: {{ prototype.author | autores }}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <ul class="list-group" *ngIf="code">
+        <li 
+            *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            class="list-group-item">
+            <pre>{{ prototype | json }}</pre>
+        </li>
+    </ul>    
+</div>

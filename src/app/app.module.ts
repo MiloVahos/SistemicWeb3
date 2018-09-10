@@ -28,9 +28,6 @@ import { BooksService } from './services/books.service';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/shared/nav-bar/nav-bar.component';
 import { HomeComponent } from './components/home/home.component';
-import { PrototypesComponent } from './components/prototypes/prototypes.component';
-import { SoftwareComponent } from './components/software/software.component';
-import { ThesisComponent } from './components/thesis/thesis.component';
 import { AuthorComponent } from './components/author/author.component';
 import { AddAuthorComponent } from './components/add/add-author/add-author.component';
 import { AddBookComponent } from './components/add/add-book/add-book.component';
@@ -45,15 +42,14 @@ import { JournalsService } from './services/journals.service';
 import { ThesisService } from './services/thesis.service';
 import { SoftwareService } from './services/software.service';
 import { PrototypesService } from './services/prototypes.service';
+import { AddSoftwareComponent } from './components/add/add-software/add-software.component';
+import { AddPrototypeComponent } from './components/add/add-prototype/add-prototype.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     HomeComponent,
-    PrototypesComponent,
-    SoftwareComponent,
-    ThesisComponent,
     CapitalizadoPipe,
     AutoresPipe,
     SearchByAuthorPipe,
@@ -65,7 +61,9 @@ import { PrototypesService } from './services/prototypes.service';
     AddChapterComponent,
     AddJournalComponent,
     AddConferenceComponent,
-    AddThesisComponent
+    AddThesisComponent,
+    AddSoftwareComponent,
+    AddPrototypeComponent
   ],
   imports: [
     BrowserModule,

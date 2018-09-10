@@ -1,0 +1,143 @@
+<h3 class="animated fadeIn">Edit Software</h3>
+<hr class="my-4">
+<form [formGroup]="forma" (ngSubmit)="saveSoftware()">
+
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-1 col-form-label">Title:</label>
+    <div class="col-5">
+        <input  [ngClass]="{ 'is-invalid': forma.get('title').invalid && forma.get('title').touched }"
+                class="form-control"
+                type="text"
+                placeholder="Software Title"
+                formControlName="title">
+        <div  *ngIf="forma.controls['title'].errors?.required"
+            class="form-control-feedback invalid-feedback">
+            This field is required
+        </div>
+    </div>
+  </div>
+
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-1 col-form-label">Name:</label>
+    <div class="col-5">
+        <input  [ngClass]="{ 'is-invalid': forma.get('name').invalid && forma.get('name').touched }"
+                class="form-control"
+                type="text"
+                placeholder="Software Name"
+                formControlName="name">
+        <div  *ngIf="forma.controls['name'].errors?.required"
+            class="form-control-feedback invalid-feedback">
+            This field is required
+        </div>
+    </div>
+  </div>
+
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-1 col-form-label">Availability:</label>
+    <div class="col-3">
+        <select formControlName="availability" class="form-control">
+            <option value="Restricted">Restricted</option>
+            <option value="Unrestricted">Unrestricted</option>
+        </select>
+        <div  *ngIf="forma.controls['availability'].errors?.required"
+            class="form-control-feedback invalid-feedback">
+            This field is required
+        </div>
+    </div>
+  </div>
+
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-1 col-form-label">Institution:</label>
+    <div class="col-5">
+        <input  [ngClass]="{ 'is-invalid': forma.get('institution').invalid && forma.get('institution').touched }"
+                class="form-control"
+                type="text"
+                placeholder="Institution Name"
+                formControlName="institution">
+        <div  *ngIf="forma.controls['institution'].errors?.required"
+            class="form-control-feedback invalid-feedback">
+            This field is required
+        </div>
+    </div>
+  </div>
+
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-1 col-form-label">Year:</label>
+    <div class="col-5">
+      <input  [ngClass]="{ 'is-invalid': forma.get('year').invalid && forma.get('year').touched }"
+              class="form-control"
+              type="number"
+              placeholder="Publication Year"
+              formControlName="year">
+      <div  *ngIf="forma.controls['year'].errors?.required"
+            class="form-control-feedback invalid-feedback">
+            This field is required
+      </div>
+      <div  *ngIf="forma.controls['year'].errors?.min || forma.controls['year'].errors?.max"
+            class="form-control-feedback invalid-feedback">
+            The year is between [1990 - Actual Year]
+      </div>
+    </div>
+  </div>
+
+  <div  class="form-group row"
+        *ngFor="let author of forma.controls['authors'].controls; let i = index ">
+    <label class="col-1 col-form-label">Author {{ i+1 }}</label>
+    <div class="col-md-5" formArrayName="authors">       
+      <input  [ngbTypeahead]="search"
+                placeholder="Search Author"
+                [formControlName]="i"
+                type="text"
+                class="form-control"
+                required>
+      <div class="animated fadeIn fast row control-buttons">
+        <a class="btn" (click)="addAuthor()">
+          <i class="icon-plus"></i>
+        </a>
+        <a class="btn" (click)="removeAuthor(i)">
+          <i class="icon-minus-sign-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="form-group row">
+          <label class="col-2 col-form-label">&nbsp;</label>
+          <div class="input-group col-md-8">
+              <button  
+                  [disabled]="!forma.valid"
+                  type="submit" 
+                  class="btn btn-outline-primary">
+                  Save Thesis
+              </button>
+          </div>
+      </div>
+      <div class="form-group row">
+          <label class="col-2 col-form-label">&nbsp;</label>
+          <div class="input-group col-md-8">
+              <a [routerLink]="['/addAuthor']" class="btn btn-success" role="button" aria-disabled="true">Add Author</a>
+          </div>
+      </div>
+  </div>
+
+  <div  class="alert alert-success alert-dismissible animated fadeIn" 
+        role="alert" 
+        *ngIf="showSuccess$ | async">
+    <strong>Success!</strong> Data saved!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div  class="alert alert-danger alert-dismissible animated fadeIn" 
+        role="alert" 
+        *ngIf="showError$ | async">
+    <strong>Error!</strong> Something went wrong with the database.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+</form>
+

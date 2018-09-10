@@ -6,6 +6,8 @@ import { AddChapterComponent } from './components/add/add-chapter/add-chapter.co
 import { AddJournalComponent } from './components/add/add-journal/add-journal.component';
 import { AddConferenceComponent } from './components/add/add-conference/add-conference.component';
 import { AddThesisComponent } from './components/add/add-thesis/add-thesis.component';
+import { AddSoftwareComponent } from './components/add/add-software/add-software.component';
+import { AddPrototypeComponent } from './components/add/add-prototype/add-prototype.component';
 
 const APP_ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
@@ -15,6 +17,8 @@ const APP_ROUTES: Routes = [
     { path: 'addJournal', component: AddJournalComponent },
     { path: 'addConference', component: AddConferenceComponent },
     { path: 'addThesis', component: AddThesisComponent },
+    { path: 'addSoftware', component: AddSoftwareComponent },
+    { path: 'addPrototype', component: AddPrototypeComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
