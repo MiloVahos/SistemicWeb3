@@ -1,6 +1,6 @@
-<h3 class="animated fadeIn">Edit Chapters</h3>
+<h3 class="animated fadeIn">Edit Thesis</h3>
 <hr class="my-4">
-<form [formGroup]="forma" (ngSubmit)="saveChapter()">
+<form [formGroup]="forma" (ngSubmit)="saveThesis()">
 
   <div class="form-group row animated fadeIn fast">
     <label class="col-1 col-form-label">Title:</label>
@@ -8,7 +8,7 @@
         <input  [ngClass]="{ 'is-invalid': forma.get('title').invalid && forma.get('title').touched }"
                 class="form-control"
                 type="text"
-                placeholder="Chapter Title"
+                placeholder="Thesis Title"
                 formControlName="title">
         <div  *ngIf="forma.controls['title'].errors?.required"
             class="form-control-feedback invalid-feedback">
@@ -18,14 +18,14 @@
   </div>
 
   <div class="form-group row animated fadeIn fast">
-    <label class="col-1 col-form-label">Book:</label>
+    <label class="col-1 col-form-label">Student:</label>
     <div class="col-5">
-        <input  [ngClass]="{ 'is-invalid': forma.get('book').invalid && forma.get('book').touched }"
+        <input  [ngClass]="{ 'is-invalid': forma.get('student').invalid && forma.get('student').touched }"
                 class="form-control"
                 type="text"
-                placeholder="Book Title"
-                formControlName="book">
-        <div  *ngIf="forma.controls['book'].errors?.required"
+                placeholder="Student Name"
+                formControlName="student">
+        <div  *ngIf="forma.controls['student'].errors?.required"
             class="form-control-feedback invalid-feedback">
             This field is required
         </div>
@@ -33,25 +33,35 @@
   </div>
 
   <div class="form-group row animated fadeIn fast">
-    <label class="col-1 col-form-label">Pages:</label>
-    <div class="col-5">
-        <input  class="form-control"
-                type="text"
-                placeholder="Pages  ## - ##"
-                formControlName="pages">
+    <label class="col-1 col-form-label">Type:</label>
+    <div class="col-3">
+        <select formControlName="type" class="form-control">
+            <option value="Undergraduated">Undergraduated</option>
+            <option value="Master">Master</option>
+            <option value="PhD">PhD</option>
+        </select>
+        <div  *ngIf="forma.controls['type'].errors?.required"
+            class="form-control-feedback invalid-feedback">
+            This field is required
+        </div>
     </div>
   </div>
 
   <div class="form-group row animated fadeIn fast">
-    <label class="col-1 col-form-label">Editorial:</label>
+    <label class="col-1 col-form-label">University:</label>
     <div class="col-5">
-        <input  class="form-control"
+        <input  [ngClass]="{ 'is-invalid': forma.get('university').invalid && forma.get('university').touched }"
+                class="form-control"
                 type="text"
-                placeholder="Editorial"
-                formControlName="editorial">
+                placeholder="University Name"
+                formControlName="university">
+        <div  *ngIf="forma.controls['university'].errors?.required"
+            class="form-control-feedback invalid-feedback">
+            This field is required
+        </div>
     </div>
   </div>
-    
+
   <div class="form-group row animated fadeIn fast">
     <label class="col-1 col-form-label">Year:</label>
     <div class="col-5">
@@ -73,7 +83,7 @@
 
   <div  class="form-group row"
         *ngFor="let author of forma.controls['authors'].controls; let i = index ">
-    <label class="col-1 col-form-label">Author {{ i+1 }}</label>
+    <label class="col-1 col-form-label">Tutor {{ i+1 }}</label>
     <div class="col-md-5" formArrayName="authors">       
       <input  [ngbTypeahead]="search"
                 placeholder="Search Author"
@@ -100,7 +110,7 @@
                   [disabled]="!forma.valid"
                   type="submit" 
                   class="btn btn-outline-primary">
-                  Save Chapter
+                  Save Thesis
               </button>
           </div>
       </div>

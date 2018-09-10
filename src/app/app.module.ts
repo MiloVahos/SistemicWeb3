@@ -28,9 +28,6 @@ import { BooksService } from './services/books.service';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/shared/nav-bar/nav-bar.component';
 import { HomeComponent } from './components/home/home.component';
-import { ChapterComponent } from './components/chapter/chapter.component';
-import { JournalComponent } from './components/journal/journal.component';
-import { ConferenceComponent } from './components/conference/conference.component';
 import { PrototypesComponent } from './components/prototypes/prototypes.component';
 import { SoftwareComponent } from './components/software/software.component';
 import { ThesisComponent } from './components/thesis/thesis.component';
@@ -38,15 +35,22 @@ import { AuthorComponent } from './components/author/author.component';
 import { AddAuthorComponent } from './components/add/add-author/add-author.component';
 import { AddBookComponent } from './components/add/add-book/add-book.component';
 import { AddChapterComponent } from './components/add/add-chapter/add-chapter.component';
+import { AddJournalComponent } from './components/add/add-journal/add-journal.component';
+import { AddConferenceComponent } from './components/add/add-conference/add-conference.component';
+import { AddThesisComponent } from './components/add/add-thesis/add-thesis.component';
+import { AuthorsService } from './services/authors.service';
+import { ChaptersService } from './services/chapters.service';
+import { ConferencesService } from './services/conferences.service';
+import { JournalsService } from './services/journals.service';
+import { ThesisService } from './services/thesis.service';
+import { SoftwareService } from './services/software.service';
+import { PrototypesService } from './services/prototypes.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     HomeComponent,
-    ChapterComponent,
-    JournalComponent,
-    ConferenceComponent,
     PrototypesComponent,
     SoftwareComponent,
     ThesisComponent,
@@ -58,7 +62,10 @@ import { AddChapterComponent } from './components/add/add-chapter/add-chapter.co
     AuthorComponent,
     AddAuthorComponent,
     AddBookComponent,
-    AddChapterComponent
+    AddChapterComponent,
+    AddJournalComponent,
+    AddConferenceComponent,
+    AddThesisComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +79,14 @@ import { AddChapterComponent } from './components/add/add-chapter/add-chapter.co
     AngularFireAuthModule
   ],
   providers: [
-    BooksService
+    BooksService,
+    AuthorsService,
+    ChaptersService,
+    ConferencesService,
+    JournalsService,
+    ThesisService,
+    SoftwareService,
+    PrototypesService
   ],
   bootstrap: [AppComponent]
 })

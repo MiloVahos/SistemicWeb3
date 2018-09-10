@@ -31,6 +31,17 @@ export class HomeComponent implements OnInit {
   Prototypes:   Prototype[]   = [];
   Thesis:       Thesis[]      = [];
 
+  documents = [ { doc: 'Any', type: 'any' },
+                { doc: 'Books', type: 'book' },
+                { doc: 'Books Chapters', type: 'chapter' },
+                { doc: 'Journal Articles', type: 'journal' },
+                { doc: 'Conference Articles', type: 'conference' },
+                { doc: 'Thesis', type: 'thesis' },
+                { doc: 'Software', type: 'software' },
+                { doc: 'Prototypes', type: 'prototype' }];
+
+  docSelected: string;
+
   list = false;
   code = false;
   column = true;
@@ -49,7 +60,6 @@ export class HomeComponent implements OnInit {
     this.Authors  = this._authorsService.getAuthors();
     this.Books  = this._booksService.getBooks();
     this.Chapters = this._chaptersService.getChapters();
-    console.log(this.Authors);
     this.Conferences  = this._conferencesService.getConferences();
     this.Journals = this._journalsService.getJournals();
     this.Prototypes = this._prototypesService.getPrototypes();

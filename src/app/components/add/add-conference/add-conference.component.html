@@ -1,6 +1,6 @@
-<h3 class="animated fadeIn">Edit Chapters</h3>
+<h3 class="animated fadeIn">Edit Conferences</h3>
 <hr class="my-4">
-<form [formGroup]="forma" (ngSubmit)="saveChapter()">
+<form [formGroup]="forma" (ngSubmit)="saveConference()">
 
   <div class="form-group row animated fadeIn fast">
     <label class="col-1 col-form-label">Title:</label>
@@ -8,7 +8,7 @@
         <input  [ngClass]="{ 'is-invalid': forma.get('title').invalid && forma.get('title').touched }"
                 class="form-control"
                 type="text"
-                placeholder="Chapter Title"
+                placeholder="Article Title"
                 formControlName="title">
         <div  *ngIf="forma.controls['title'].errors?.required"
             class="form-control-feedback invalid-feedback">
@@ -18,14 +18,14 @@
   </div>
 
   <div class="form-group row animated fadeIn fast">
-    <label class="col-1 col-form-label">Book:</label>
+    <label class="col-1 col-form-label">Name:</label>
     <div class="col-5">
-        <input  [ngClass]="{ 'is-invalid': forma.get('book').invalid && forma.get('book').touched }"
+        <input  [ngClass]="{ 'is-invalid': forma.get('conference').invalid && forma.get('conference').touched }"
                 class="form-control"
                 type="text"
-                placeholder="Book Title"
-                formControlName="book">
-        <div  *ngIf="forma.controls['book'].errors?.required"
+                placeholder="Conference Name"
+                formControlName="conference">
+        <div  *ngIf="forma.controls['conference'].errors?.required"
             class="form-control-feedback invalid-feedback">
             This field is required
         </div>
@@ -43,14 +43,25 @@
   </div>
 
   <div class="form-group row animated fadeIn fast">
-    <label class="col-1 col-form-label">Editorial:</label>
+    <label class="col-1 col-form-label">URL:</label>
     <div class="col-5">
         <input  class="form-control"
                 type="text"
-                placeholder="Editorial"
-                formControlName="editorial">
+                placeholder="URL / DOI"
+                formControlName="url">
     </div>
   </div>
+
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-1 col-form-label">Ambit:</label>
+    <div class="col-5">
+        <input  class="form-control"
+                type="text"
+                placeholder="Ambit"
+                formControlName="ambit">
+    </div>
+  </div>
+  
     
   <div class="form-group row animated fadeIn fast">
     <label class="col-1 col-form-label">Year:</label>
@@ -100,7 +111,7 @@
                   [disabled]="!forma.valid"
                   type="submit" 
                   class="btn btn-outline-primary">
-                  Save Chapter
+                  Save Conference
               </button>
           </div>
       </div>

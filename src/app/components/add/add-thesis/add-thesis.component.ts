@@ -4,13 +4,14 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { Observable, timer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Author } from '../../../interfaces/author.interface';
-import { Chapter } from '../../../interfaces/chapter.interface';
+import { Thesis } from '../../../interfaces/thesis.interface';
+
 
 @Component({
-  selector: 'app-add-chapter',
-  templateUrl: './add-chapter.component.html'
+  selector: 'app-add-thesis',
+  templateUrl: './add-thesis.component.html'
 })
-export class AddChapterComponent implements OnInit {
+export class AddThesisComponent implements OnInit {
 
   forma: FormGroup;
 
@@ -19,11 +20,11 @@ export class AddChapterComponent implements OnInit {
 
   public currentYear = new Date().getFullYear();
 
-  chapter: Object = {
+  thesis: Object = {
     title: '',
-    book: '',
-    pages: '',
-    editorial: '',
+    student: '',
+    type: '',
+    university: '',
     year: null,
     authors: []
   };
@@ -33,25 +34,63 @@ export class AddChapterComponent implements OnInit {
   authorsNames: Array<string> = [];
 
   AuthorsColRef: AngularFirestoreCollection<Author>;
-  ChaptersColRef: AngularFirestoreCollection<Chapter>;
+  ThesisColRef: AngularFirestoreCollection<Thesis>;
 
   constructor(private db: AngularFirestore) {
 
     this.AuthorsColRef = this.db.collection<Author>('AUTHORS');
-    this.ChaptersColRef = this.db.collection<Chapter>('CHAPTERS');
+    this.ThesisColRef = this.db.collection<Thesis>('THESIS');
 
     this.authors = this.db.collection('AUTHORS').valueChanges();
 
     this.forma = new FormGroup({
-      'title':      new FormControl( '', Validators.required ),
-      'book':       new FormControl( '', Validators.required ),
-      'pages':      new FormControl( '' ),
-      'editorial':  new FormControl( '' ),
-      'year':       new FormControl( null, [Validators.required,
+      'title':    new FormControl( '', Validators.required ),
+      'student':  new FormControl( '', Validators.required ),
+      'type':   new FormControl( '', Validators.required ),
+      'university':   new FormControl( '', Validators.required ),
+      'year':     new FormControl( null, [Validators.required,
                                             Validators.min(1990),
                                             Validators.max(this.currentYear)] ),
-      'authors':    new FormArray([ new FormControl('', Validators.required ) ])
+      'authors':  new FormArray([ new FormControl('', Validators.required ) ])
     });
+  }
+
+  saveThesis() {
+
+    const authorList: string[] = this.forma.value.authors;
+
+    const thesis: Thesis = {
+
+      title:      this.forma.value.title,
+      student:    this.forma.value.student,
+      type:       this.forma.value.type,
+      university: this.forma.value.university,
+      year:       this.forma.value.year.toString(),
+      author:     this.forma.value.authors.join(' , ')
+
+    };
+
+    this.ThesisColRef.add(thesis).then((result) => {
+      for ( let i = 0; i < authorList.length; i++ ) {
+        this.AuthorsColRef.doc(authorList[i]).collection('THESIS').add(thesis);
+      }
+      this.showSuccess$ = timer(200).pipe( map(() => true), share() );
+    })
+    .catch((err) => {
+      this.showError$ = timer(200).pipe( map(() => true), share() );
+    });
+
+    this.forma.reset({
+      title: '',
+      student: '',
+      type: '',
+      university: '',
+      year: null
+    });
+    this.forma.controls['authors'].reset();
+    while ((<FormArray>this.forma.controls['authors']).length !== 1) {
+      (<FormArray>this.forma.controls['authors']).removeAt(0);
+    }
   }
 
   ngOnInit() {
@@ -73,44 +112,6 @@ export class AddChapterComponent implements OnInit {
     (<FormArray>this.forma.controls['authors']).removeAt(i);
   }
 
-  saveChapter() {
-
-    const authorList: string[] = this.forma.value.authors;
-
-    const chapter: Chapter = {
-
-      title:      this.forma.value.title,
-      book:       this.forma.value.book,
-      pages:      this.forma.value.pages,
-      editorial:  this.forma.value.editorial,
-      year:       this.forma.value.year.toString(),
-      author:     this.forma.value.authors.join(' , ')
-
-    };
-
-    this.ChaptersColRef.add(chapter).then((result) => {
-      for ( let i = 0; i < authorList.length; i++ ) {
-        this.AuthorsColRef.doc(authorList[i]).collection('CHAPTERS').add(chapter);
-      }
-      this.showSuccess$ = timer(200).pipe( map(() => true), share() );
-    })
-    .catch((err) => {
-      this.showError$ = timer(200).pipe( map(() => true), share() );
-    });
-
-    this.forma.reset({
-      title: '',
-      book: '',
-      pages: '',
-      editorial: '',
-      year: null
-    });
-    this.forma.controls['authors'].reset();
-    while ((<FormArray>this.forma.controls['authors']).length !== 1) {
-      (<FormArray>this.forma.controls['authors']).removeAt(0);
-    }
-  }
-
   search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
@@ -120,3 +121,4 @@ export class AddChapterComponent implements OnInit {
     )
 
 }
+

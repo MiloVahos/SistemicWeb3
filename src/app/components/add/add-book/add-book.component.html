@@ -1,10 +1,10 @@
-<h3 class="animated fadeIn">Add new book</h3>
+<h3 class="animated fadeIn">Edit Books</h3>
 <hr class="my-4">
 <form [formGroup]="forma" (ngSubmit)="saveBook()">
 
     <div class="form-group row animated fadeIn fast">
-        <label class="col-2 col-form-label">Title:</label>
-        <div class="col-8">
+        <label class="col-1 col-form-label">Title:</label>
+        <div class="col-5">
             <input [ngClass]="{ 'is-invalid': forma.get('title').invalid && forma.get('title').touched }"
                 class="form-control"
                 type="text"
@@ -18,8 +18,8 @@
     </div>
 
     <div class="form-group row animated fadeIn fast">
-        <label class="col-2 col-form-label">Editorial:</label>
-        <div class="col-8">
+        <label class="col-1 col-form-label">Editorial:</label>
+        <div class="col-5">
             <input [ngClass]="{ 'is-invalid': forma.get('editorial').invalid && forma.get('editorial').touched }"
                 class="form-control"
                 type="text"
@@ -33,8 +33,8 @@
     </div>
     
     <div class="form-group row animated fadeIn fast">
-        <label class="col-2 col-form-label">Year:</label>
-        <div class="col-8">
+        <label class="col-1 col-form-label">Year:</label>
+        <div class="col-5">
                 <input  [ngClass]="{ 'is-invalid': forma.get('year').invalid && forma.get('year').touched }"
                         class="form-control"
                         type="number"
@@ -53,8 +53,8 @@
 
     <div class="form-group row"
          *ngFor="let author of forma.controls['authors'].controls; let i = index ">
-        <label class="col-2 col-form-label">Author {{ i }}</label>
-        <div class="col-md-8" formArrayName="authors">       
+        <label class="col-1 col-form-label">Author {{ i+1 }}</label>
+        <div class="col-md-5" formArrayName="authors">       
             <input  [ngbTypeahead]="search"
                     placeholder="Search Author"
                     [formControlName]="i"

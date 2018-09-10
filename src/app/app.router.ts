@@ -3,12 +3,18 @@ import { HomeComponent } from './components/home/home.component';
 import { AddBookComponent } from './components/add/add-book/add-book.component';
 import { AddAuthorComponent } from './components/add/add-author/add-author.component';
 import { AddChapterComponent } from './components/add/add-chapter/add-chapter.component';
+import { AddJournalComponent } from './components/add/add-journal/add-journal.component';
+import { AddConferenceComponent } from './components/add/add-conference/add-conference.component';
+import { AddThesisComponent } from './components/add/add-thesis/add-thesis.component';
 
 const APP_ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'addAuthor', component: AddAuthorComponent },
     { path: 'addBook', component: AddBookComponent },
     { path: 'addChapter', component: AddChapterComponent },
+    { path: 'addJournal', component: AddJournalComponent },
+    { path: 'addConference', component: AddConferenceComponent },
+    { path: 'addThesis', component: AddThesisComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

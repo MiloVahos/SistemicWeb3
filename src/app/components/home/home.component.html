@@ -3,20 +3,13 @@
 
 <div class="row">
     <ul>
-        <div class="btn-group">
-            <button type="button" class="btn-sm btn-success dropdown-toggle" 
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Document Type
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item">Any</a>
-                <a class="dropdown-item">Book</a>
-                <a class="dropdown-item">Book Chapter</a>
-                <a class="dropdown-item">Conference Articles</a>
-                <a class="dropdown-item">Journal Articles</a>
-                <a class="dropdown-item">Prototypes</a>
-                <a class="dropdown-item">Software</a>
-                <a class="dropdown-item">Thesis</a>
+        <div class="form-control-sm">
+            <div class="col-md-8">
+                <select class="form-control-sm" [(ngModel)]="docSelected">
+                    <option [value]="any" disabled>Document Type</option>
+                    <option *ngFor="let document of documents"
+                            [value]="document.type"> {{ document.doc }} </option>
+                </select>
             </div>
         </div>
     </ul>
@@ -67,7 +60,7 @@
     </ul>
 </div>
 
-<div>
+<div *ngIf="(docSelected === 'any') || (docSelected === 'book')">
     <h4>Books</h4>
     <hr>
     <button [routerLink]="['/addBook']"
@@ -126,7 +119,7 @@
     </ul>    
 </div>
 
-<div>
+<div *ngIf="(docSelected === 'any') || (docSelected === 'chapter')">
     <h4>Books Chapters</h4>
     <hr>
     <button [routerLink]="['/addChapter']"
@@ -174,7 +167,7 @@
             <td>Chapter Title: {{ chapter.title | capitalizado }}
                 Book Title: {{ chapter.book | capitalizado }}, 
                 Editorial: {{ chapter.editorial | capitalizado }}, 
-                Pages: {{ chapter.pages | capitalizado }}, 
+                Pages: {{ chapter.pages }}, 
                 Year: {{ chapter.year }}, 
                 Authors: {{ chapter.author | autores }}
             </td>
@@ -187,6 +180,222 @@
             *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
             class="list-group-item">
             <pre>{{ chapter | json }}</pre>
+        </li>
+    </ul>    
+</div>
+
+
+<div *ngIf="(docSelected === 'any') || (docSelected === 'journal')">
+    <h4>Journal Articles</h4>
+    <hr>
+    <button [routerLink]="['/addJournal']"
+            class="btn btn-outline-primary addbutton"
+            type="button" name="button">
+            Edit Journals
+    </button>
+
+    
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Journal</th>
+            <th>Number</th>
+            <th>Volume</th>
+            <th *ngIf="complete">Pages</th>
+            <th *ngIf="complete">URL</th>
+            <th *ngIf="complete">Colciencias Category</th>
+            <th *ngIf="complete">SJR Category</th>
+            <th>Year</th>
+            <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>{{ journal.title | capitalizado }}</td>
+            <td>{{ journal.journal | capitalizado }}</td>
+            <td>{{ journal.number }}</td>
+            <td>{{ journal.volume }}</td>
+            <td *ngIf="complete">{{ journal.pages  }}</td>
+            <td *ngIf="complete">{{ journal.ulr }}</td>
+            <td *ngIf="complete">{{ journal.colCat }}</td>
+            <td *ngIf="complete">{{ journal.sjrCat }}</td>
+            <td>{{ journal.year }}</td>
+            <td>{{ journal.author | autores }}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="list">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th scope="col">Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>Article Title: {{ journal.title | capitalizado }}
+                Journal Name: {{ journal.journal | capitalizado }}, 
+                Number: {{ journal.number }},
+                Volume: {{ journal.volume }},
+                Pages: {{ journal.pages }}, 
+                URL: {{ journal.url }}, 
+                Colciencias Category: {{ journal.colCat }}, 
+                SJR Category: {{ journal.sjrCat }}, 
+                Year: {{ journal.year }}, 
+                Authors: {{ journal.author | autores }}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <ul class="list-group" *ngIf="code">
+        <li 
+            *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            class="list-group-item">
+            <pre>{{ journal | json }}</pre>
+        </li>
+    </ul>    
+</div>
+
+
+<div *ngIf="(docSelected === 'any') || (docSelected === 'conference')">
+    <h4>Conference Articles</h4>
+    <hr>
+    <button [routerLink]="['/addConference']"
+            class="btn btn-outline-primary addbutton"
+            type="button" name="button">
+            Edit Conferences
+    </button>
+    
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Conference</th>
+            <th *ngIf="complete">Pages</th>
+            <th *ngIf="complete">URL</th>
+            <th *ngIf="complete">Ambit</th>
+            <th>Year</th>
+            <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>{{ conference.title | capitalizado }}</td>
+            <td>{{ conference.conference | capitalizado }}</td>
+            <td *ngIf="complete">{{ conference.pages  }}</td>
+            <td *ngIf="complete">{{ conference.ulr }}</td>
+            <td *ngIf="complete">{{ conference.ambit }}</td>
+            <td>{{ conference.year }}</td>
+            <td>{{ conference.author | autores }}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="list">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th scope="col">Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>Article Title: {{ conference.title | capitalizado }}
+                Conference Name: {{ conference.conference | capitalizado }}, 
+                Pages: {{ conference.pages }}, 
+                URL: {{ conference.url }}, 
+                Ambit: {{ conference.ambit }}, 
+                Year: {{ conference.year }}, 
+                Authors: {{ conference.author | autores }}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <ul class="list-group" *ngIf="code">
+        <li 
+            *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            class="list-group-item">
+            <pre>{{ conference | json }}</pre>
+        </li>
+    </ul>    
+</div>
+
+<div *ngIf="(docSelected === 'any') || (docSelected === 'thesis')">
+    <h4>Thesis</h4>
+    <hr>
+    <button [routerLink]="['/addThesis']"
+            class="btn btn-outline-primary addbutton"
+            type="button" name="button">
+            Edit Thesis
+    </button>
+    
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Student</th>
+            <th>Type</th>
+            <th *ngIf="complete">University</th>
+            <th>Year</th>
+            <th>Tutor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>{{ tesis.title | capitalizado }}</td>
+            <td>{{ tesis.student | capitalizado }}</td>
+            <td>{{ tesis.type | capitalizado  }}</td>
+            <td *ngIf="complete">{{ tesis.university }}</td>
+            <td>{{ tesis.year }}</td>
+            <td>{{ tesis.author | autores }}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <table class="table table-sm table-dark animated fadeIn" *ngIf="list">
+        <thead>
+            <tr>
+            <th>#</th>
+            <th scope="col">Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="animated fadeIn"
+                *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
+            <th scope="row"></th>
+            <td>Title: {{ tesis.title | capitalizado }}
+                Student Name: {{ tesis.student | capitalizado }}, 
+                Type: {{ tesis.type }}, 
+                URL: {{ tesis.university | capitalizado }}, 
+                Year: {{ tesis.year }}, 
+                Authors: {{ tesis.author | autores }}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <ul class="list-group" *ngIf="code">
+        <li 
+            *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            class="list-group-item">
+            <pre>{{ tesis | json }}</pre>
         </li>
     </ul>    
 </div>
