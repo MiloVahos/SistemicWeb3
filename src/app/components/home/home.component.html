@@ -28,10 +28,19 @@
                 type="text" placeholder="Filter by Author" 
                 [(ngModel)]="searchAuthor" name="searchAuthor">
     </ul>
-    <ul>
-        <button class="btn-sm btn-success"
-                type="button" name="button">
-                Admin Login
+    <ul>           
+        <a  *ngIf="logged == false"
+            [routerLink]="['/login']"
+            class="btn btn-success" 
+            role="button" 
+            aria-disabled="true">
+            Admin Login
+        </a>
+        <button *ngIf="logged == true"
+                (click)="logout()"
+                class="btn btn-danger"
+                type="button">
+                Admin logout
         </button>
     </ul>
     <ul>
@@ -63,7 +72,8 @@
 <div *ngIf="(docSelected === 'any') || (docSelected === 'book')">
     <h4>Books</h4>
     <hr>
-    <button [routerLink]="['/addBook']"
+    <button *ngIf="logged == true"
+            [routerLink]="['/addBook']"
             class="btn btn-outline-primary addbutton"
             type="button" name="button">
             Edit Books
@@ -122,7 +132,8 @@
 <div *ngIf="(docSelected === 'any') || (docSelected === 'chapter')">
     <h4>Books Chapters</h4>
     <hr>
-    <button [routerLink]="['/addChapter']"
+    <button *ngIf="logged == true"
+            [routerLink]="['/addChapter']"
             class="btn btn-outline-primary addbutton"
             type="button" name="button">
             Edit Book Chapters
@@ -188,7 +199,8 @@
 <div *ngIf="(docSelected === 'any') || (docSelected === 'journal')">
     <h4>Journal Articles</h4>
     <hr>
-    <button [routerLink]="['/addJournal']"
+    <button *ngIf="logged == true"
+            [routerLink]="['/addJournal']"
             class="btn btn-outline-primary addbutton"
             type="button" name="button">
             Edit Journals
@@ -268,7 +280,8 @@
 <div *ngIf="(docSelected === 'any') || (docSelected === 'conference')">
     <h4>Conference Articles</h4>
     <hr>
-    <button [routerLink]="['/addConference']"
+    <button *ngIf="logged == true"
+            [routerLink]="['/addConference']"
             class="btn btn-outline-primary addbutton"
             type="button" name="button">
             Edit Conferences
@@ -337,7 +350,8 @@
 <div *ngIf="(docSelected === 'any') || (docSelected === 'thesis')">
     <h4>Thesis</h4>
     <hr>
-    <button [routerLink]="['/addThesis']"
+    <button *ngIf="logged == true"
+            [routerLink]="['/addThesis']"
             class="btn btn-outline-primary addbutton"
             type="button" name="button">
             Edit Thesis
@@ -403,7 +417,8 @@
 <div *ngIf="(docSelected === 'any') || (docSelected === 'software')">
     <h4>Software</h4>
     <hr>
-    <button [routerLink]="['/addSoftware']"
+    <button *ngIf="logged == true"
+            [routerLink]="['/addSoftware']"
             class="btn btn-outline-primary addbutton"
             type="button" name="button">
             Edit Software
@@ -470,7 +485,8 @@
 <div *ngIf="(docSelected === 'any') || (docSelected === 'prototype')">
     <h4>Prototypes</h4>
     <hr>
-    <button [routerLink]="['/addPrototype']"
+    <button *ngIf="logged == true"
+            [routerLink]="['/addPrototype']"
             class="btn btn-outline-primary addbutton"
             type="button" name="button">
             Edit Prototypes

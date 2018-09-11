@@ -5,6 +5,8 @@ import { Observable, timer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Author } from '../../../interfaces/author.interface';
 import { Conference } from '../../../interfaces/conference.interface';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-conference',
@@ -36,7 +38,14 @@ export class AddConferenceComponent implements OnInit {
   AuthorsColRef: AngularFirestoreCollection<Author>;
   ConferencesColRef: AngularFirestoreCollection<Conference>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore,
+              private router: Router,
+              private _authS: AuthService
+            ) {
+
+    if ( !this._authS.isUserEmailLoggedIn ) {
+      this.router.navigate(['/']);
+    }
 
     this.AuthorsColRef = this.db.collection<Author>('AUTHORS');
     this.ConferencesColRef = this.db.collection<Conference>('CONFERENCES');

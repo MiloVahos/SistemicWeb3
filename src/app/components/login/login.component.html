@@ -1,0 +1,53 @@
+<div class="row">
+
+  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="card card-signin my-5">
+      <div class="card-body">
+        <h5 class="card-title text-center">Log in</h5>
+        <form class="form-signin" [formGroup]="forma" (ngSubmit)="login()">
+
+          <div class="form-label-group form-group">
+            <input  [ngClass]="{ 'is-invalid': forma.get('email').invalid && forma.get('email').touched }"
+                    class="form-control"
+                    type="email"
+                    placeholder="Email address" 
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                    formControlName="email">
+            <div  *ngIf="forma.controls['email'].errors?.required"
+                  class="form-control-feedback invalid-feedback">
+              This field is required
+            </div>
+            <div  *ngIf="forma.controls['email'].errors?.pattern"
+                  class="invalid-feedback">
+              Doesn´t match the pattern
+            </div>
+          </div>
+
+          <div class="form-label-group form-group">
+            <input  [ngClass]="{ 'is-invalid': forma.get('password').invalid && forma.get('password').touched }"
+                    type="password"
+                    class="form-control" 
+                    placeholder="Password"
+                    formControlName="password">
+            <div  *ngIf="forma.controls['password'].errors?.required"
+                  class="form-control-feedback invalid-feedback">
+              This field is required
+            </div>
+          </div>
+          <button [disabled]="!forma.valid"
+                  class="btn btn-lg btn-primary btn-block text-uppercase" 
+                  type="submit">Log in</button>     
+        </form>
+        <div  class="alert alert-danger alert-dismissible animated fadeIn" 
+              role="alert" 
+              *ngIf="showError$ | async"
+              style="margin-top: 10px">
+          <strong>Error!</strong> Something went wrong with the database.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

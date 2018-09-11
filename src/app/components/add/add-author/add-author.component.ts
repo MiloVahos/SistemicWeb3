@@ -5,6 +5,8 @@ import { Author } from '../../../interfaces/author.interface';
 import { Observable } from 'rxjs';
 import { timer } from 'rxjs';
 import { map, share } from 'rxjs/operators';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -32,10 +34,15 @@ export class AddAuthorComponent {
 
   AuthorsColRef: AngularFirestoreCollection<Author>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(  private afs: AngularFirestore,
+                private router: Router,
+                private _authS: AuthService
+              ) {
 
     this.AuthorsColRef = this.afs.collection<Author>('AUTHORS');
-
+    if ( !this._authS.isUserEmailLoggedIn ) {
+      this.router.navigate(['/']);
+    }
   }
 
   guardar(forma: NgForm) {

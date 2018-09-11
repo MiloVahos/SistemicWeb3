@@ -8,6 +8,7 @@ import { AddConferenceComponent } from './components/add/add-conference/add-conf
 import { AddThesisComponent } from './components/add/add-thesis/add-thesis.component';
 import { AddSoftwareComponent } from './components/add/add-software/add-software.component';
 import { AddPrototypeComponent } from './components/add/add-prototype/add-prototype.component';
+import { LoginComponent } from './components/login/login.component';
 
 const APP_ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const APP_ROUTES: Routes = [
     { path: 'addThesis', component: AddThesisComponent },
     { path: 'addSoftware', component: AddSoftwareComponent },
     { path: 'addPrototype', component: AddPrototypeComponent },
+    { path: 'login', component: LoginComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

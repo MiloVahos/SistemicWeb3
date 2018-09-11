@@ -5,6 +5,8 @@ import { Observable, timer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Author } from '../../../interfaces/author.interface';
 import { Book } from '../../../interfaces/book.interface';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -34,7 +36,14 @@ export class AddBookComponent implements OnInit {
   AuthorsColRef: AngularFirestoreCollection<Author>;
   BooksColRef: AngularFirestoreCollection<Book>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(  private db: AngularFirestore,
+                private router: Router,
+                private _authS: AuthService
+              ) {
+
+    if ( !this._authS.isUserEmailLoggedIn ) {
+      this.router.navigate(['/']);
+    }
 
     this.AuthorsColRef = this.db.collection<Author>('AUTHORS');
     this.BooksColRef = this.db.collection<Book>('BOOKS');

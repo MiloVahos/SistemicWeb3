@@ -5,7 +5,8 @@ import { Observable, timer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Author } from '../../../interfaces/author.interface';
 import { Thesis } from '../../../interfaces/thesis.interface';
-
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-thesis',
@@ -36,7 +37,14 @@ export class AddThesisComponent implements OnInit {
   AuthorsColRef: AngularFirestoreCollection<Author>;
   ThesisColRef: AngularFirestoreCollection<Thesis>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore,
+              private router: Router,
+              private _authS: AuthService
+            ) {
+
+    if ( !this._authS.isUserEmailLoggedIn ) {
+      this.router.navigate(['/']);
+    }
 
     this.AuthorsColRef = this.db.collection<Author>('AUTHORS');
     this.ThesisColRef = this.db.collection<Thesis>('THESIS');

@@ -15,6 +15,8 @@ import { JournalsService } from '../../services/journals.service';
 import { SoftwareService } from '../../services/software.service';
 import { PrototypesService } from '../../services/prototypes.service';
 import { ThesisService } from '../../services/thesis.service';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-home',
@@ -40,12 +42,13 @@ export class HomeComponent implements OnInit {
                 { doc: 'Software', type: 'software' },
                 { doc: 'Prototypes', type: 'prototype' }];
 
-  docSelected: string;
+  docSelected = 'any';
 
   list = false;
   code = false;
   column = true;
   complete = false;
+  logged = false;
 
   constructor(  private _booksService: BooksService,
                 private _chaptersService: ChaptersService,
@@ -54,7 +57,16 @@ export class HomeComponent implements OnInit {
                 private _journalsService: JournalsService,
                 private _softwareService: SoftwareService,
                 private _prototypesService: PrototypesService,
-                private _thesisServices: ThesisService ) {}
+                private _thesisServices: ThesisService,
+                public _authS: AuthService ) {
+
+    if ( this._authS.isUserEmailLoggedIn ) {
+      this.logged = true;
+    } else {
+      this.logged = false;
+    }
+
+  }
 
   ngOnInit() {
     this.Authors  = this._authorsService.getAuthors();
@@ -66,7 +78,6 @@ export class HomeComponent implements OnInit {
     this.Software = this._softwareService.getSoftware();
     this.Thesis = this._thesisServices.getThesis();
   }
-
 
   listView() {
     this.list = true;
@@ -84,6 +95,11 @@ export class HomeComponent implements OnInit {
     this.list = false;
     this.code = true;
     this.column = false;
+  }
+
+  logout() {
+    this._authS.signOut();
+    this.logged = false;
   }
 
 }

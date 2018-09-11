@@ -22,7 +22,14 @@ import { SearchByTitlePipe } from './pipes/filter-title-pipe';
 
 // SERVICES
 import { BooksService } from './services/books.service';
-
+import { AuthorsService } from './services/authors.service';
+import { ChaptersService } from './services/chapters.service';
+import { ConferencesService } from './services/conferences.service';
+import { JournalsService } from './services/journals.service';
+import { ThesisService } from './services/thesis.service';
+import { SoftwareService } from './services/software.service';
+import { PrototypesService } from './services/prototypes.service';
+import { AuthService } from './services/auth.service';
 
 // COMPONENTES
 import { AppComponent } from './app.component';
@@ -35,15 +42,9 @@ import { AddChapterComponent } from './components/add/add-chapter/add-chapter.co
 import { AddJournalComponent } from './components/add/add-journal/add-journal.component';
 import { AddConferenceComponent } from './components/add/add-conference/add-conference.component';
 import { AddThesisComponent } from './components/add/add-thesis/add-thesis.component';
-import { AuthorsService } from './services/authors.service';
-import { ChaptersService } from './services/chapters.service';
-import { ConferencesService } from './services/conferences.service';
-import { JournalsService } from './services/journals.service';
-import { ThesisService } from './services/thesis.service';
-import { SoftwareService } from './services/software.service';
-import { PrototypesService } from './services/prototypes.service';
 import { AddSoftwareComponent } from './components/add/add-software/add-software.component';
 import { AddPrototypeComponent } from './components/add/add-prototype/add-prototype.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { AddPrototypeComponent } from './components/add/add-prototype/add-protot
     AddConferenceComponent,
     AddThesisComponent,
     AddSoftwareComponent,
-    AddPrototypeComponent
+    AddPrototypeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +86,8 @@ import { AddPrototypeComponent } from './components/add/add-prototype/add-protot
     JournalsService,
     ThesisService,
     SoftwareService,
-    PrototypesService
+    PrototypesService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

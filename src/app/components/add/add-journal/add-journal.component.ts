@@ -5,6 +5,8 @@ import { Observable, timer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Author } from '../../../interfaces/author.interface';
 import { Journal } from '../../../interfaces/journal.interface';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-journal',
@@ -39,7 +41,14 @@ export class AddJournalComponent implements OnInit {
   AuthorsColRef: AngularFirestoreCollection<Author>;
   JournalsColRef: AngularFirestoreCollection<Journal>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore,
+              private router: Router,
+              private _authS: AuthService
+            ) {
+
+    if ( !this._authS.isUserEmailLoggedIn ) {
+      this.router.navigate(['/']);
+    }
 
     this.AuthorsColRef = this.db.collection<Author>('AUTHORS');
     this.JournalsColRef = this.db.collection<Journal>('JOURNALS');
