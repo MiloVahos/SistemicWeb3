@@ -10,7 +10,9 @@ export class SearchByTitlePipe implements PipeTransform {
     if (searchText == null) {
         return documents;
     } else {
-        return documents.filter( document => document.title.indexOf(searchText) !== -1 );
+        return documents.filter( document => document.title
+                                        .toLocaleLowerCase()
+                                        .indexOf(searchText.toLocaleLowerCase()) !== -1  );
     }
   }
 

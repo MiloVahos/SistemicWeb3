@@ -33,7 +33,6 @@ import { AuthService } from './services/auth.service';
 
 // COMPONENTES
 import { AppComponent } from './app.component';
-import { NavBarComponent } from './components/shared/nav-bar/nav-bar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthorComponent } from './components/author/author.component';
 import { AddAuthorComponent } from './components/add/add-author/add-author.component';
@@ -49,7 +48,6 @@ import { LoginComponent } from './components/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
     HomeComponent,
     CapitalizadoPipe,
     AutoresPipe,
