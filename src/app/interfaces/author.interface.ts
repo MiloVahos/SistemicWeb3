@@ -1,9 +1,10 @@
 export interface Author {
 
+    id?: string;
     name: string;
     membership: string;
-    availability: boolean;
-    email?: string;
+    email: string;
+    active: boolean;
 
 }
 

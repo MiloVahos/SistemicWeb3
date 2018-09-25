@@ -1,30 +1,32 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { Author } from '../interfaces/author.interface';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorsService {
 
-  private authorsList: Author[] = [];  // Lista de libros que se generar a partir del observable de firebase
-  private authors: Observable<any[]>; // En este observable se obtiene la colección de libros de firebase
+  private AuthorsCol: AngularFirestoreCollection<Author>;  // COLECCIÓN DE AUTORES DE LA BASE DE DATOS
+  private AuthorsObs: Observable<Author[]>; // OBSERVABLE DONDE SE VAN A ALMACENAR LOS AUTORES
+  private AuthorsList: Author[]  = []; // CONTENDRÁ LOS AUTORES SI NO SE DESEAN COMO OBSERVABLE
 
-  constructor(db: AngularFirestore) {
-
-    this.authors = db.collection('AUTHORS').valueChanges(); // Se obtiene la colección de libros
-
-    this.authors.subscribe(authors => {
-      authors.forEach(author =>  {
-        this.authorsList.push(author);
-      });
-    });
+  constructor( db: AngularFirestore ) {
+    this.AuthorsCol = db.collection<Author>('AUTHORS');
+    this.AuthorsObs = this.AuthorsCol.valueChanges();
   }
 
+  // READ
   getAuthors() {
-    return this.authorsList;
+    this.AuthorsObs.subscribe( authors => {
+      authors.forEach( author =>  {
+        this.AuthorsList.push(author);
+      });
+    });
+    return this.AuthorsList;
   }
 
 }
+
+

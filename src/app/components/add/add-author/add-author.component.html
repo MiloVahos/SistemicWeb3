@@ -1,93 +1,89 @@
 <h3 class="animated fadeIn">Add new author</h3>
 <hr class="my-4">
-<form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
+<form [formGroup]="forma" (ngSubmit)="saveAuthor()">
 
   <div class="form-group row animated fadeIn fast">
-    <label class="col-2 col-form-label">Full Name:</label>
-    <div class="col-8">
-
-      <input class="form-control"
-             [ngClass]="{ 'is-invalid': (name.errors?.required || name.errors?.minlength) && name.touched }"
-             type="text"
-             placeholder="Author Full Name"
-             name="name"
-             [(ngModel)]="author.name"
-             minlength="10"
-             required
-             #name="ngModel">
-      <div *ngIf="name.errors?.required"
-            class="invalid-feedback">
+    <label class="col-2 col-form-label">Name: </label>
+    <div class="col-5">
+      <input [ngClass]="{ 'is-invalid': forma.get('name').invalid && forma.get('name').touched }"
+          class="form-control"
+          type="text"
+          placeholder="Author Full Name"
+          formControlName="name">
+      <div  *ngIf="forma.controls['name'].errors?.required"
+          class="form-control-feedback invalid-feedback">
           This field is required
       </div>
-      <div *ngIf="name.errors?.minlength"
-            class="invalid-feedback">
-          This field requieres at least {{ name.errors.minlength.requiredLength }} characters
-      </div>
-
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Email:</label>
-    <div class="col-8">
-
-      <input class="form-control"
-             [ngClass]="{ 'is-invalid': email.errors?.pattern && email.touched }"
-             type="text"
-             placeholder="Email"
-             name="email"
-             [(ngModel)]="author.email"
-             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-             #email="ngModel">
-      <div *ngIf="email.errors?.pattern"
-          class="invalid-feedback">
-        Doesn´t match the pattern
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-2 col-form-label">Email: </label>
+    <div class="col-5">
+      <input [ngClass]="{ 'is-invalid': forma.get('email').invalid && forma.get('email').touched }"
+          class="form-control"
+          type="text"
+          placeholder="Author Email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          formControlName="email">
+      <div  *ngIf="forma.controls['email'].errors?.required"
+          class="form-control-feedback invalid-feedback">
+          This field is required
       </div>
-
+      <div  *ngIf="forma.controls['email'].errors?.pattern"
+          class="form-control-feedback invalid-feedback">
+          Doesn´t match the pattern
+      </div>
     </div>
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row animated fadeIn fast">
     <label class="col-2 col-form-label">Membership:</label>
-    <div class="col-md-8">
-
-      <select [(ngModel)]="author.membership"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': membership.errors?.required && membership.touched }"
-              name="membership"
-              required
-              #membership="ngModel">
-        <option *ngFor="let member of membershipTypes"
-          [value]="member.type"> {{ member.type }} </option>
-      </select>
-
-
+    <div class="col-5">
+        <select formControlName="membership" class="form-control">
+            <option value="Professor">Professor</option>
+            <option value="Undergraduate Student">Undergraduate Student</option>
+            <option value="Master Student">Master Student</option>
+            <option value="PhD Student">PhD Student</option>
+            <option value="Research Assitant">Research Assitant</option>
+            <option value="External Researcher">External Researcher</option>
+        </select>
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Availability:</label>
-    <div class="col-md-8">
-  
+  <div class="form-group row animated fadeIn fast">
+    <label class="col-2 col-form-label">Active:</label>
+    <div class="col-5"> 
       <div class="custom-control custom-checkbox">
-        <input  [(ngModel)]="author.availability"
-                name="availability"
-                type="checkbox" 
+        <input  type="checkbox" 
                 class="custom-control-input" 
-                id="customCheck1">
+                id="customCheck1"
+                formControlName="active">
         <label class="custom-control-label" for="customCheck1">Check if author is available </label>
-      </div>
-  
+      </div> 
     </div>
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row" *ngIf="!updateMode">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-8">
-      <button [disabled]="!forma.valid"
-              type="submit" 
-              class="btn btn-outline-primary">
-        Save
+      <button  
+          [disabled]="!forma.valid"
+          type="submit" 
+          class="btn btn-outline-primary">
+          Save Author
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="updateMode">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button  
+          (click)="update()"
+          type="submit" 
+          class="btn btn-outline-warning">
+          Update Author
       </button>
     </div>
   </div>
@@ -110,5 +106,34 @@
     </button>
   </div>
 
-</form>
+</form>   
+
+<div class="row animated fadeIn fast">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-dark">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Membership</th>
+            <th scope="col">Email</th>
+            <th scope="col">Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor=" let author of AuthorsObs | async " >
+            <th scope="row"></th>
+            <td>{{ author.name | capitalizado }}</td>
+            <td>{{ author.membership | capitalizado }}</td>
+            <td>{{ author.email }}</td>
+            <td><i class="icon-ok" *ngIf="author.active"></i></td>
+            <td><a class="btn" (click)="updateAuthor(author)"><i class="icon-pencil"></i></a></td>
+            <td><a class="btn" (click)="deleteAuthor(author)" data-toggle="modal" data-target="#deleteModal"><i class="icon-trash"></i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
