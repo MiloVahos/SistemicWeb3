@@ -129,7 +129,7 @@
             <td>{{ author.email }}</td>
             <td><i class="icon-ok" *ngIf="author.active"></i></td>
             <td><a class="btn" (click)="updateAuthor(author)"><i class="icon-pencil"></i></a></td>
-            <td><a class="btn" (click)="deleteAuthor(author)" data-toggle="modal" data-target="#deleteModal"><i class="icon-trash"></i></a></td>
+            <td><a class="btn" (click)="deleteAuthor(author,content)" data-toggle="modal" data-target="#deleteModal"><i class="icon-trash"></i></a></td>
           </tr>
         </tbody>
       </table>
@@ -137,3 +137,17 @@
   </div>
 </div>
 
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete author<strong> {{ deleteName }} </strong>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="delete()">DELETE</button>
+  </div>
+</ng-template>

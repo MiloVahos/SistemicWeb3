@@ -2,7 +2,7 @@ import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // FIREBASE
@@ -71,6 +71,7 @@ import { LoginComponent } from './components/login/login.component';
     ReactiveFormsModule,
     HttpModule,
     APP_ROUTING,
+    NgbModalModule,
     NgbTypeaheadModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),

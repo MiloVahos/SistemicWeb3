@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable, timer } from 'rxjs';
@@ -19,6 +20,9 @@ export class AddAuthorComponent implements OnInit {
   showError$: Observable<boolean>;    // SI LA TRANSFERENCIA FALLA, SE ACTIVA ESTA BANDERA
   updateMode = false;                 // MODO UPDATE ACTIVADO
   private updatedID: string;          // ID QUE SE VA A MODIFICAR
+  private deleteID: string;           // ID QUE SE VA A ELIMINAR
+  deleteName: string;                 // NOMBRE DEL AUTOR QUE SE VA A BORRAR
+  closeResult: string;
 
   // VARIABLES DE LA BASE DE DATOS
   private AuthorsCol: AngularFirestoreCollection<Author>;  // COLECCIÓN DE AUTORES DE LA BASE DE DATOS
@@ -27,7 +31,8 @@ export class AddAuthorComponent implements OnInit {
 
   constructor(  private router: Router,
                 private _authS: AuthService,
-                private db: AngularFirestore
+                private db: AngularFirestore,
+                private modalService: NgbModal
               ) {
 
     // SI EL USUARIO NO ESTÁ LOGGEADO, SE REGRESA AL HOME
@@ -119,12 +124,40 @@ export class AddAuthorComponent implements OnInit {
 
   // DELETE
   deleteAuthor ( author: Author, content ) {
-    const response = confirm('are you sure you want to delete?');
+    this.deleteID = author.id;
+    this.deleteName = author.name;
+    this.modalService.open( content, { ariaLabelledBy: 'modal-basic-title' } )
+      .result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+    
+    /*const response = confirm('are you sure you want to delete?');
     if ( response ) {
       this.AuthorsCol.doc(author.id).delete();
     }
-    return;
+    return;*/
   }
+
+  delete(){
+    this.AuthorsCol.doc(this.deleteID).delete();
+    this.deleteID  = '';
+    this.deleteName  = '';
+    this.modalService.dismissAll(this.closeResult);
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+
+  
 
   getUniqueId() {
     return '_' + Math.random().toString(36).substr(2, 9) + (new Date()).getTime().toString(36);
