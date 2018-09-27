@@ -132,12 +132,6 @@ export class AddAuthorComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-    
-    /*const response = confirm('are you sure you want to delete?');
-    if ( response ) {
-      this.AuthorsCol.doc(author.id).delete();
-    }
-    return;*/
   }
 
   delete(){
@@ -156,8 +150,6 @@ export class AddAuthorComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-
-  
 
   getUniqueId() {
     return '_' + Math.random().toString(36).substr(2, 9) + (new Date()).getTime().toString(36);

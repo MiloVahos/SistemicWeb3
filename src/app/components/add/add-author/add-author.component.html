@@ -1,5 +1,6 @@
 <h3 class="animated fadeIn">Add new author</h3>
 <hr class="my-4">
+<!-- FORMULARIO PARA CREAR AUTOR -->
 <form [formGroup]="forma" (ngSubmit)="saveAuthor()">
 
   <div class="form-group row animated fadeIn fast">
@@ -108,6 +109,7 @@
 
 </form>   
 
+<!-- TABLA CON AUTORES Y OPCIONES DE CRUD -->
 <div class="row animated fadeIn fast">
   <div class="col-md-12">
     <div class="table-responsive">
@@ -122,14 +124,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor=" let author of AuthorsObs | async " >
+          <tr *ngFor=" let author of AuthorsObs | async ">
             <th scope="row"></th>
             <td>{{ author.name | capitalizado }}</td>
             <td>{{ author.membership | capitalizado }}</td>
             <td>{{ author.email }}</td>
             <td><i class="icon-ok" *ngIf="author.active"></i></td>
             <td><a class="btn" (click)="updateAuthor(author)"><i class="icon-pencil"></i></a></td>
-            <td><a class="btn" (click)="deleteAuthor(author,content)" data-toggle="modal" data-target="#deleteModal"><i class="icon-trash"></i></a></td>
+            <td><a class="btn" (click)="deleteAuthor(author,content)"><i class="icon-trash"></i></a></td>
           </tr>
         </tbody>
       </table>
@@ -137,6 +139,7 @@
   </div>
 </div>
 
+<!-- VENTANA DE OPCIONES CUANDO SE VA A BORRAR UN AUTOR -->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Confirm Delete</h4>

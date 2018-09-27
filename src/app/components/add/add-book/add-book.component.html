@@ -1,9 +1,11 @@
 <h3 class="animated fadeIn">Edit Books</h3>
 <hr class="my-4">
+
+<!-- FORMULARIO PARA AGREGAR LIBROS -->
 <form [formGroup]="forma" (ngSubmit)="saveBook()">
 
     <div class="form-group row animated fadeIn fast">
-        <label class="col-1 col-form-label">Title:</label>
+        <label class="col-2 col-form-label">Title:</label>
         <div class="col-5">
             <input [ngClass]="{ 'is-invalid': forma.get('title').invalid && forma.get('title').touched }"
                 class="form-control"
@@ -18,7 +20,7 @@
     </div>
 
     <div class="form-group row animated fadeIn fast">
-        <label class="col-1 col-form-label">Editorial:</label>
+        <label class="col-2 col-form-label">Editorial:</label>
         <div class="col-5">
             <input [ngClass]="{ 'is-invalid': forma.get('editorial').invalid && forma.get('editorial').touched }"
                 class="form-control"
@@ -33,7 +35,7 @@
     </div>
     
     <div class="form-group row animated fadeIn fast">
-        <label class="col-1 col-form-label">Year:</label>
+        <label class="col-2 col-form-label">Year:</label>
         <div class="col-5">
                 <input  [ngClass]="{ 'is-invalid': forma.get('year').invalid && forma.get('year').touched }"
                         class="form-control"
@@ -53,7 +55,7 @@
 
     <div class="form-group row"
          *ngFor="let author of forma.controls['authors'].controls; let i = index ">
-        <label class="col-1 col-form-label">Author {{ i+1 }}</label>
+        <label class="col-2 col-form-label">Author {{ i+1 }}</label>
         <div class="col-md-5" formArrayName="authors">       
             <input  [ngbTypeahead]="search"
                     placeholder="Search Author"
@@ -73,7 +75,7 @@
     </div>
 
     <div class="row">
-        <div class="form-group row">
+        <div class="form-group row" *ngIf="!updateMode">
             <label class="col-2 col-form-label">&nbsp;</label>
             <div class="input-group col-md-8">
                 <button  
@@ -84,6 +86,18 @@
                 </button>
             </div>
         </div>
+        <div class="form-group row" *ngIf="updateMode">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="input-group col-md-8">
+            <button  
+                (click)="update()"
+                type="submit" 
+                class="btn btn-outline-warning">
+                Update Book
+            </button>
+            </div>
+        </div>
+
         <div class="form-group row">
             <label class="col-2 col-form-label">&nbsp;</label>
             <div class="input-group col-md-8">
@@ -111,3 +125,49 @@
     </div>
 
 </form>
+
+<!-- TABLA CON AUTORES Y OPCIONES DE CRUD -->
+<div class="row animated fadeIn fast">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-sm table-dark">
+                <thead>
+                    <tr>
+                    <th>#</th>
+                    <th scope="col">Book Title</th>
+                    <th scope="col">Editorial</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let book of BooksObs | async">
+                    <th scope="row"></th>
+                    <td>{{ book.title | capitalizado }}</td>
+                    <td>{{ book.editorial | capitalizado }}</td>
+                    <td>{{ book.year }}</td>
+                    <td>{{ book.author | autores }}</td>
+                    <td><a class="btn" (click)="updateBook(book)"><i class="icon-pencil"></i></a></td>
+                    <td><a class="btn" (click)="deleteBook(book,content)"><i class="icon-trash"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- VENTANA DE OPCIONES CUANDO SE VA A BORRAR UN AUTOR -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete book<strong> {{ deleteTitle }} </strong>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="delete()">DELETE</button>
+  </div>
+</ng-template>
