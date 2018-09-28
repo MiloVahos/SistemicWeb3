@@ -4,7 +4,6 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable, timer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
-import { Author } from '../../../interfaces/author.interface';
 import { Book } from '../../../interfaces/book.interface';
 import { AuthService } from '../../../services/auth.service';
 import { AuthorsService } from '../../../services/authors.service';
@@ -57,7 +56,7 @@ export class AddBookComponent implements OnInit {
       'authors':    new FormArray([ new FormControl('', Validators.required ) ])
     });
 
-    this.BooksCol = db.collection<Author>('BOOKS');
+    this.BooksCol = db.collection<Book>('BOOKS');
     this.BooksObs = this.BooksCol.valueChanges();
   }
 
@@ -107,8 +106,8 @@ export class AddBookComponent implements OnInit {
       editorial: book.editorial,
       year: book.year
     });
-    
-    let authors: string[] = book.author.split(' , ');
+
+    const authors: string[] = book.author.split(' , ');
     for ( let i = 0; i < authors.length; i++ ) {
       (<FormArray>this.forma.controls['authors']).push(
         new FormControl( authors[i], Validators.required )
@@ -155,7 +154,7 @@ export class AddBookComponent implements OnInit {
     });
   }
 
-  delete(){
+  delete() {
     this.BooksCol.doc(this.deleteID).delete();
     this.deleteID  = '';
     this.deleteTitle  = '';
