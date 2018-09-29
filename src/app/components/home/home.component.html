@@ -233,7 +233,7 @@
             <td>{{ journal.number }}</td>
             <td>{{ journal.volume }}</td>
             <td *ngIf="complete">{{ journal.pages  }}</td>
-            <td *ngIf="complete">{{ journal.ulr }}</td>
+            <td *ngIf="complete">{{ journal.url }}</td>
             <td *ngIf="complete">{{ journal.colCat }}</td>
             <td *ngIf="complete">{{ journal.sjrCat }}</td>
             <td>{{ journal.year }}</td>
@@ -308,7 +308,7 @@
             <td>{{ conference.title | capitalizado }}</td>
             <td>{{ conference.conference | capitalizado }}</td>
             <td *ngIf="complete">{{ conference.pages  }}</td>
-            <td *ngIf="complete">{{ conference.ulr }}</td>
+            <td *ngIf="complete">{{ conference.url }}</td>
             <td *ngIf="complete">{{ conference.ambit }}</td>
             <td>{{ conference.year }}</td>
             <td>{{ conference.author | autores }}</td>

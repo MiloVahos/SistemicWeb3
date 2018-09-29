@@ -104,7 +104,7 @@
   </div>
 
   <div class="row">
-      <div class="form-group row">
+      <div class="form-group row" *ngIf="!updateMode">
           <label class="col-2 col-form-label">&nbsp;</label>
           <div class="input-group col-md-8">
               <button  
@@ -113,6 +113,17 @@
                   class="btn btn-outline-primary">
                   Save Conference
               </button>
+          </div>
+      </div>
+      <div class="form-group row" *ngIf="updateMode">
+          <label class="col-2 col-form-label">&nbsp;</label>
+          <div class="input-group col-md-8">
+          <button  
+              (click)="update()"
+              type="submit" 
+              class="btn btn-outline-warning">
+              Update Conference
+          </button>
           </div>
       </div>
       <div class="form-group row">
@@ -142,3 +153,53 @@
   </div>
 
 </form>
+
+<div class="row animated fadeIn fast">
+  <div class="col-md-12">
+      <div class="table-responsive">
+          <table class="table table-sm table-dark">
+              <thead>
+                  <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Conference</th>
+                  <th>Pages</th>
+                  <th>URL</th>
+                  <th>Ambit</th>
+                  <th>Year</th>
+                  <th>Author</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let conference of ConferencesObs | async">
+                  <th scope="row"></th>
+                  <td>{{ conference.title | capitalizado }}</td>
+                  <td>{{ conference.conference | capitalizado }}</td>
+                  <td>{{ conference.pages  }}</td>
+                  <td>{{ conference.url }}</td>
+                  <td>{{ conference.ambit }}</td>
+                  <td>{{ conference.year }}</td>
+                  <td>{{ conference.author | autores }}</td>
+                  <td><a class="btn" (click)="updateConference(conference)"><i class="icon-pencil"></i></a></td>
+                  <td><a class="btn" (click)="deleteConference(conference,content)"><i class="icon-trash"></i></a></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete conference<strong> {{ deleteTitle }} </strong>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="delete()">DELETE</button>
+  </div>
+</ng-template>
