@@ -1,5 +1,6 @@
 export interface Chapter {
 
+    id?: string;
     title: string;
     book: string;
     pages?: string;

@@ -142,25 +142,37 @@
     </div>
   </div>
 
-  <div class="row">
-      <div class="form-group row">
-          <label class="col-2 col-form-label">&nbsp;</label>
-          <div class="input-group col-md-8">
-              <button  
-                  [disabled]="!forma.valid"
-                  type="submit" 
-                  class="btn btn-outline-primary">
-                  Save Journal
-              </button>
-          </div>
-      </div>
-      <div class="form-group row">
-          <label class="col-2 col-form-label">&nbsp;</label>
-          <div class="input-group col-md-8">
-              <a [routerLink]="['/addAuthor']" class="btn btn-success" role="button" aria-disabled="true">Add Author</a>
-          </div>
-      </div>
-  </div>
+    <div class="row">
+        <div class="form-group row" *ngIf="!updateMode">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="input-group col-md-8">
+                <button  
+                    [disabled]="!forma.valid"
+                    type="submit" 
+                    class="btn btn-outline-primary">
+                    Save Journal
+                </button>
+            </div>
+        </div>
+        <div class="form-group row" *ngIf="updateMode">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="input-group col-md-8">
+            <button  
+                (click)="update()"
+                type="submit" 
+                class="btn btn-outline-warning">
+                Update Journal
+            </button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="input-group col-md-8">
+                <a [routerLink]="['/addAuthor']" class="btn btn-success" role="button" aria-disabled="true">Add Author</a>
+            </div>
+        </div>
+    </div>
+  
 
   <div  class="alert alert-success alert-dismissible animated fadeIn" 
         role="alert" 
@@ -182,3 +194,63 @@
 
 </form>
 
+
+<!-- TABLA CON CHAPTERS Y OPCIONES DE CRUD -->
+<div class="row animated fadeIn fast">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-sm table-dark">
+                <thead>
+                    <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Journal</th>
+                    <th>Number</th>
+                    <th>Volume</th>
+                    <th>Pages</th>
+                    <th>URL</th>
+                    <th>Colciencias Category</th>
+                    <th>SJR Category</th>
+                    <th>Year</th>
+                    <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let journal of JournalsObs | async">
+                    <th scope="row"></th>
+                    <td>{{ journal.title | capitalizado }}</td>
+                    <td>{{ journal.journal | capitalizado }}</td>
+                    <td>{{ journal.number }}</td>
+                    <td>{{ journal.volume }}</td>
+                    <td>{{ journal.pages  }}</td>
+                    <td>{{ journal.ulr }}</td>
+                    <td>{{ journal.colCat }}</td>
+                    <td>{{ journal.sjrCat }}</td>
+                    <td>{{ journal.year }}</td>
+                    <td>{{ journal.author | autores }}</td>
+                    <td><a class="btn" (click)="updateJournal(journal)"><i class="icon-pencil"></i></a></td>
+                    <td><a class="btn" (click)="deleteJournal(journal,content)"><i class="icon-trash"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+  
+  
+<!-- VENTANA DE OPCIONES CUANDO SE VA A BORRAR UN AUTOR -->
+<ng-template #content let-modal>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    Are you sure you want to delete Journal<strong> {{ deleteTitle }} </strong>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="delete()">DELETE</button>
+</div>
+</ng-template>
+  

@@ -1,5 +1,6 @@
 export interface Journal {
 
+    id?: string;
     title: string;
     journal: string;
     number: string;

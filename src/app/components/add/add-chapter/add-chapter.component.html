@@ -93,7 +93,7 @@
   </div>
 
   <div class="row">
-      <div class="form-group row">
+      <div class="form-group row" *ngIf="!updateMode">
           <label class="col-2 col-form-label">&nbsp;</label>
           <div class="input-group col-md-8">
               <button  
@@ -102,6 +102,17 @@
                   class="btn btn-outline-primary">
                   Save Chapter
               </button>
+          </div>
+      </div>
+      <div class="form-group row" *ngIf="updateMode">
+          <label class="col-2 col-form-label">&nbsp;</label>
+          <div class="input-group col-md-8">
+          <button  
+              (click)="update()"
+              type="submit" 
+              class="btn btn-outline-warning">
+              Update Chapter
+          </button>
           </div>
       </div>
       <div class="form-group row">
@@ -131,3 +142,54 @@
   </div>
 
 </form>
+
+<!-- TABLA CON CHAPTERS Y OPCIONES DE CRUD -->
+<div class="row animated fadeIn fast">
+  <div class="col-md-12">
+      <div class="table-responsive">
+          <table class="table table-sm table-dark">
+              <thead>
+                  <tr>
+                  <th>#</th>
+                  <th>Book Title</th>
+                  <th>Chapter Title</th>
+                  <th>Editorial</th>
+                  <th>Pages</th>
+                  <th>Year</th>
+                  <th>Author</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let chapter of ChaptersObs | async">
+                  <th scope="row"></th>
+                  <td>{{ chapter.title | capitalizado }}</td>
+                  <td>{{ chapter.book | capitalizado }}</td>
+                  <td>{{ chapter.editorial | capitalizado }}</td>
+                  <td>{{ chapter.pages }}</td>
+                  <td>{{ chapter.year }}</td>
+                  <td>{{ chapter.author | autores }}</td>
+                  <td><a class="btn" (click)="updateChapter(chapter)"><i class="icon-pencil"></i></a></td>
+                  <td><a class="btn" (click)="deleteChapter(chapter,content)"><i class="icon-trash"></i></a></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+
+<!-- VENTANA DE OPCIONES CUANDO SE VA A BORRAR UN AUTOR -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete book chapter<strong> {{ deleteTitle }} </strong>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="delete()">DELETE</button>
+  </div>
+</ng-template>
