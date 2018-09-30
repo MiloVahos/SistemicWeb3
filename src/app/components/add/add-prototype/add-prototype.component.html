@@ -86,25 +86,36 @@
     </div>
   </div>
 
-  <div class="row">
-      <div class="form-group row">
-          <label class="col-2 col-form-label">&nbsp;</label>
-          <div class="input-group col-md-8">
-              <button  
-                  [disabled]="!forma.valid"
-                  type="submit" 
-                  class="btn btn-outline-primary">
-                  Save Prototype
-              </button>
-          </div>
-      </div>
-      <div class="form-group row">
-          <label class="col-2 col-form-label">&nbsp;</label>
-          <div class="input-group col-md-8">
-              <a [routerLink]="['/addAuthor']" class="btn btn-success" role="button" aria-disabled="true">Add Author</a>
-          </div>
-      </div>
-  </div>
+    <div class="row">
+        <div class="form-group row" *ngIf="!updateMode">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="input-group col-md-8">
+                <button  
+                    [disabled]="!forma.valid"
+                    type="submit" 
+                    class="btn btn-outline-primary">
+                    Save Prototype
+                </button>
+            </div>
+        </div>
+        <div class="form-group row" *ngIf="updateMode">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="input-group col-md-8">
+            <button  
+                (click)="update()"
+                type="submit" 
+                class="btn btn-outline-warning">
+                Update Prototype
+            </button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="input-group col-md-8">
+                <a [routerLink]="['/addAuthor']" class="btn btn-success" role="button" aria-disabled="true">Add Author</a>
+            </div>
+        </div>
+    </div>
 
   <div  class="alert alert-success alert-dismissible animated fadeIn" 
         role="alert" 
@@ -125,3 +136,49 @@
   </div>
 
 </form>
+
+<div class="row animated fadeIn fast">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-sm table-dark">
+                <thead>
+                    <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Availability</th>
+                    <th>Institution</th>
+                    <th>Year</th>
+                    <th>Tutor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let prototype of PrototypesObs | async">
+                    <th scope="row"></th>
+                    <td>{{ prototype.title | capitalizado }}</td>
+                    <td>{{ prototype.availability }}</td>
+                    <td>{{ prototype.institution }}</td>
+                    <td>{{ prototype.year }}</td>
+                    <td>{{ prototype.author | autores }}</td>
+                    <td><a class="btn" (click)="updatePrototype(prototype)"><i class="icon-pencil"></i></a></td>
+                    <td><a class="btn" (click)="deletePrototype(prototype,content)"><i class="icon-trash"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+  
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Confirm Delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Are you sure you want to delete prototype<strong> {{ deleteTitle }} </strong>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="delete()">DELETE</button>
+    </div>
+</ng-template>
