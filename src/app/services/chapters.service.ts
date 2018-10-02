@@ -17,7 +17,15 @@ export class ChaptersService {
 
     this.chapters.subscribe(chapters => {
       chapters.forEach(chapter =>  {
-        this.chaptersList.push(chapter);
+        let flag = 0;
+        for ( let i = 0; i < this.chaptersList.length; i++ ) {
+          if ( this.chaptersList[i].id === chapter.id ) {
+            flag++;
+          }
+        }
+        if ( flag === 0 ) {
+          this.chaptersList.push(chapter);
+        }
       });
     });
 

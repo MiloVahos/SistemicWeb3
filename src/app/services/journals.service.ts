@@ -17,7 +17,15 @@ export class JournalsService {
 
     this.journals.subscribe(journals => {
       journals.forEach(journal =>  {
-        this.journalsList.push(journal);
+        let flag = 0;
+        for ( let i = 0; i < this.journalsList.length; i++ ) {
+          if ( this.journalsList[i].id === journal.id ) {
+            flag++;
+          }
+        }
+        if ( flag === 0 ) {
+          this.journalsList.push(journal);
+        }
       });
     });
   }

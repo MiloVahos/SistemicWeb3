@@ -17,7 +17,15 @@ export class ThesisService {
 
     this.thesis.subscribe(thesis => {
       thesis.forEach(tesis =>  {
-        this.thesisList.push(tesis);
+        let flag = 0;
+        for ( let i = 0; i < this.thesisList.length; i++ ) {
+          if ( this.thesisList[i].id === tesis.id ) {
+            flag++;
+          }
+        }
+        if ( flag === 0 ) {
+          this.thesisList.push(tesis);
+        }
       });
     });
   }

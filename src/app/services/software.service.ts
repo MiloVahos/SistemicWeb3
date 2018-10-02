@@ -17,7 +17,15 @@ export class SoftwareService {
 
     this.software.subscribe(software => {
       software.forEach(soft =>  {
-        this.softwareList.push(soft);
+        let flag = 0;
+        for ( let i = 0; i < this.softwareList.length; i++ ) {
+          if ( this.softwareList[i].id === soft.id ) {
+            flag++;
+          }
+        }
+        if ( flag === 0 ) {
+          this.softwareList.push(soft);
+        }
       });
     });
   }

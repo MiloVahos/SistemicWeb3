@@ -18,7 +18,15 @@ export class AuthorsService {
     this.AuthorsObs = this.AuthorsCol.valueChanges();
     this.AuthorsObs.subscribe( authors => {
       authors.forEach( author =>  {
-        this.AuthorsList.push(author);
+        let flag = 0;
+        for ( let i = 0; i < this.AuthorsList.length; i++ ) {
+          if ( this.AuthorsList[i].id === author.id ) {
+            flag++;
+          }
+        }
+        if ( flag === 0 ) {
+          this.AuthorsList.push(author);
+        }
       });
     });
     this.AuthorsObs.subscribe( authors => {

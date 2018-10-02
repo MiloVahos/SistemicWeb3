@@ -17,7 +17,15 @@ export class ConferencesService {
 
     this.conferences.subscribe(conferences => {
       conferences.forEach(conference =>  {
-        this.conferencesList.push(conference);
+        let flag = 0;
+        for ( let i = 0; i < this.conferencesList.length; i++ ) {
+          if ( this.conferencesList[i].id === conference.id ) {
+            flag++;
+          }
+        }
+        if ( flag === 0 ) {
+          this.conferencesList.push(conference);
+        }
       });
     });
   }

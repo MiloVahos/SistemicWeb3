@@ -17,7 +17,15 @@ export class PrototypesService {
 
     this.prototypes.subscribe(prototypes => {
       prototypes.forEach(prototype =>  {
-        this.prototypesList.push(prototype);
+        let flag = 0;
+        for ( let i = 0; i < this.prototypesList.length; i++ ) {
+          if ( this.prototypesList[i].id === prototype.id ) {
+            flag++;
+          }
+        }
+        if ( flag === 0 ) {
+          this.prototypesList.push(prototype);
+        }
       });
     });
   }

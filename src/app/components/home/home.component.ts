@@ -57,26 +57,68 @@ export class HomeComponent implements OnInit {
                 private _journalsService: JournalsService,
                 private _softwareService: SoftwareService,
                 private _prototypesService: PrototypesService,
-                private _thesisServices: ThesisService,
+                private _thesisService: ThesisService,
                 public _authS: AuthService ) {
 
-    if ( this._authS.isUserEmailLoggedIn ) {
-      this.logged = true;
-    } else {
-      this.logged = false;
-    }
+    setTimeout ( () => {
+      if ( this._authS.isUserEmailLoggedIn ) {
+        this.logged = true;
+      } else {
+        this.logged = false;
+      }
+    }, 1500);
 
   }
 
   ngOnInit() {
-    this.Authors  = this._authorsService.getAuthors();
-    this.Books  = this._booksService.getBooks();
-    this.Chapters = this._chaptersService.getChapters();
-    this.Conferences  = this._conferencesService.getConferences();
-    this.Journals = this._journalsService.getJournals();
-    this.Prototypes = this._prototypesService.getPrototypes();
-    this.Software = this._softwareService.getSoftware();
-    this.Thesis = this._thesisServices.getThesis();
+    if ( this.Authors.length === 0 ) {
+      this.Authors  = this._authorsService.getAuthors();
+    } else {
+      this.Authors.length  = 0;
+      this.Authors  = this._authorsService.getAuthors();
+    }
+    if ( this.Books.length === 0 ) {
+      this.Books  = this._booksService.getBooks();
+    } else {
+      this.Books.length  = 0;
+      this.Books  = this._booksService.getBooks();
+    }
+    if ( this.Chapters.length === 0 ) {
+      this.Chapters  = this._chaptersService.getChapters();
+    } else {
+      this.Chapters.length  = 0;
+      this.Chapters  = this._chaptersService.getChapters();
+    }
+    if ( this.Conferences.length === 0 ) {
+      this.Conferences  = this._conferencesService.getConferences();
+    } else {
+      this.Conferences.length  = 0;
+      this.Conferences  = this._conferencesService.getConferences();
+    }
+    if ( this.Journals.length === 0 ) {
+      this.Journals  = this._journalsService.getJournals();
+    } else {
+      this.Journals.length  = 0;
+      this.Journals  = this._journalsService.getJournals();
+    }
+    if ( this.Prototypes.length === 0 ) {
+      this.Prototypes  = this._prototypesService.getPrototypes();
+    } else {
+      this.Prototypes.length  = 0;
+      this.Prototypes  = this._prototypesService.getPrototypes();
+    }
+    if ( this.Software.length === 0 ) {
+      this.Software  = this._softwareService.getSoftware();
+    } else {
+      this.Software.length  = 0;
+      this.Software  = this._softwareService.getSoftware();
+    }
+    if ( this.Thesis.length === 0 ) {
+      this.Thesis  = this._thesisService.getThesis();
+    } else {
+      this.Thesis.length  = 0;
+      this.Thesis  = this._thesisService.getThesis();
+    }
   }
 
   listView() {

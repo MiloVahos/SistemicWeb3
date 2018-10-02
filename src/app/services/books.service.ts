@@ -17,7 +17,15 @@ export class BooksService {
 
     this.books.subscribe(books => {
       books.forEach(book =>  {
-        this.booksList.push(book);
+        let flag = 0;
+        for ( let i = 0; i < this.booksList.length; i++ ) {
+          if ( this.booksList[i].id === book.id ) {
+            flag++;
+          }
+        }
+        if ( flag === 0 ) {
+          this.booksList.push(book);
+        }
       });
     });
 

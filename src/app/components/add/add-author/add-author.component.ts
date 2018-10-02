@@ -134,7 +134,7 @@ export class AddAuthorComponent implements OnInit {
     });
   }
 
-  delete(){
+  delete() {
     this.AuthorsCol.doc(this.deleteID).delete();
     this.deleteID  = '';
     this.deleteName  = '';
