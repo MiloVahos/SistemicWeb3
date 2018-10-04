@@ -44,9 +44,9 @@ export class HomeComponent implements OnInit {
 
   docSelected = 'any';
 
-  list = false;
+  list = true;
   code = false;
-  column = true;
+  column = false;
   complete = false;
   logged = false;
 

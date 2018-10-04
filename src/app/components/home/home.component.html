@@ -91,8 +91,8 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
+                *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
             <td>{{ book.title | capitalizado }}</td>
             <td *ngIf="complete">{{ book.editorial | capitalizado }}</td>
             <td>{{ book.year }}</td>
@@ -105,17 +105,18 @@
         <thead>
             <tr>
             <th>#</th>
-            <th scope="col">Information</th>
+            <th>Information</th>
             </tr>
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
-            <td>Book Title: {{ book.title | capitalizado }}, 
-                Editorial: {{ book.editorial | capitalizado }}, 
-                Year: {{ book.year }}, 
-                Authors: {{ book.author | autores }}
+                *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index" >
+            <th>{{ i + 1 }}</th>
+            <td>
+                {{ book.author | autores }}:<br/>
+                <strong>{{ book.title | capitalizado }}.</strong>
+                <span *ngIf="complete"> {{ book.editorial | capitalizado }}. </span>
+                ({{ book.year }})
             </td>
             </tr>
         </tbody>
@@ -153,8 +154,8 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
+                *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
             <td>{{ chapter.title | capitalizado }}</td>
             <td>{{ chapter.book | capitalizado }}</td>
             <td *ngIf="complete">{{ chapter.editorial | capitalizado }}</td>
@@ -174,14 +175,14 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
-            <td>Chapter Title: {{ chapter.title | capitalizado }}
-                Book Title: {{ chapter.book | capitalizado }}, 
-                Editorial: {{ chapter.editorial | capitalizado }}, 
-                Pages: {{ chapter.pages }}, 
-                Year: {{ chapter.year }}, 
-                Authors: {{ chapter.author | autores }}
+                *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
+            <td>
+                {{ chapter.author | autores }}:<br/>
+                <strong>{{ chapter.title | capitalizado }}.</strong>
+                {{ chapter.book | capitalizado }}, {{ chapter.editorial | capitalizado }},
+                <span *ngIf="complete"> {{ chapter.pages }}.</span>
+                ({{ chapter.year }})
             </td>
             </tr>
         </tbody>
@@ -196,7 +197,6 @@
     </ul>    
 </div>
 
-
 <div *ngIf="(docSelected === 'any') || (docSelected === 'journal')">
     <h4>Journal Articles</h4>
     <hr>
@@ -207,7 +207,6 @@
             Edit Journals
     </button>
 
-    
     <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
         <thead>
             <tr>
@@ -226,8 +225,8 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
+                *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
             <td>{{ journal.title | capitalizado }}</td>
             <td>{{ journal.journal | capitalizado }}</td>
             <td>{{ journal.number }}</td>
@@ -246,23 +245,20 @@
         <thead>
             <tr>
             <th>#</th>
-            <th scope="col">Information</th>
+            <th>Information</th>
             </tr>
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
-            <td>Article Title: {{ journal.title | capitalizado }}
-                Journal Name: {{ journal.journal | capitalizado }}, 
-                Number: {{ journal.number }},
-                Volume: {{ journal.volume }},
-                Pages: {{ journal.pages }}, 
-                URL: {{ journal.url }}, 
-                Colciencias Category: {{ journal.colCat }}, 
-                SJR Category: {{ journal.sjrCat }}, 
-                Year: {{ journal.year }}, 
-                Authors: {{ journal.author | autores }}
+                *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index" >
+            <th>{{ i + 1 }}</th>
+            <td>
+                {{ journal.author | autores }}:<br/>
+                <strong>{{ journal.title | capitalizado }}.</strong>
+                {{ journal.journal | capitalizado }}, {{ journal.number }},
+                <span *ngIf="complete"> {{ journal.volume }}, {{ journal.pages }}, 
+                {{ journal.url }}, {{ journal.colCat }}, {{ journal.sjrCat }}.</span>
+                ({{ journal.year }})
             </td>
             </tr>
         </tbody>
@@ -276,7 +272,6 @@
         </li>
     </ul>    
 </div>
-
 
 <div *ngIf="(docSelected === 'any') || (docSelected === 'conference')">
     <h4>Conference Articles</h4>
@@ -303,8 +298,8 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
+                *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
             <td>{{ conference.title | capitalizado }}</td>
             <td>{{ conference.conference | capitalizado }}</td>
             <td *ngIf="complete">{{ conference.pages  }}</td>
@@ -320,20 +315,18 @@
         <thead>
             <tr>
             <th>#</th>
-            <th scope="col">Information</th>
+            <th>Information</th>
             </tr>
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
-            <td>Article Title: {{ conference.title | capitalizado }}
-                Conference Name: {{ conference.conference | capitalizado }}, 
-                Pages: {{ conference.pages }}, 
-                URL: {{ conference.url }}, 
-                Ambit: {{ conference.ambit }}, 
-                Year: {{ conference.year }}, 
-                Authors: {{ conference.author | autores }}
+                *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
+            <td>
+                {{ conference.author | autores }}:<br/>
+                <strong>{{ conference.title | capitalizado }}.</strong>
+                <span *ngIf="complete"> {{ conference.conference | capitalizado }}, {{ conference.pages }}, {{ conference.url }}, {{ conference.ambit }}.</span>
+                ({{ conference.year }})
             </td>
             </tr>
         </tbody>
@@ -372,8 +365,8 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
+                *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
             <td>{{ tesis.title | capitalizado }}</td>
             <td>{{ tesis.student | capitalizado }}</td>
             <td>{{ tesis.type | capitalizado  }}</td>
@@ -393,14 +386,13 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
-            <td>Title: {{ tesis.title | capitalizado }}
-                Student Name: {{ tesis.student | capitalizado }}, 
-                Type: {{ tesis.type }}, 
-                URL: {{ tesis.university | capitalizado }}, 
-                Year: {{ tesis.year }}, 
-                Authors: {{ tesis.author | autores }}
+                *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
+            <td>
+                {{ tesis.author | autores }}:<br/>
+                <strong>{{ tesis.title | capitalizado }}. </strong> {{ tesis.student | capitalizado }}, 
+                <span *ngIf="complete"> {{ tesis.type }}, {{ tesis.university | capitalizado }}. </span>
+                ({{ tesis.year }})
             </td>
             </tr>
         </tbody>
@@ -439,8 +431,8 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
+                *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
             <td>{{ soft.title | capitalizado }}</td>
             <td>{{ soft.name }}</td>
             <td *ngIf="complete">{{ soft.availability }}</td>
@@ -455,24 +447,23 @@
         <thead>
             <tr>
             <th>#</th>
-            <th scope="col">Information</th>
+            <th>Information</th>
             </tr>
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
-            <td>Title: {{ soft.title | capitalizado }},
-                Comercial Name: {{ soft.name }}, 
-                Availability: {{ soft.availability }}, 
-                Institution: {{ soft.institution }}, 
-                Year: {{ soft.year }}, 
-                Authors: {{ soft.author | autores }}
+                *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+                {{ soft.author | autores }}:<br/>
+                <strong>{{ soft.title | capitalizado }}.</strong>
+                <span *ngIf="complete">{{ soft.name }}, {{ soft.availability }}, {{ soft.institution }}. </span>
+                ({{ soft.year }})
             </td>
             </tr>
         </tbody>
     </table>
-        
+      
     <ul class="list-group" *ngIf="code">
         <li 
             *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
@@ -481,7 +472,6 @@
         </li>
     </ul>    
 </div>
-
 
 <div *ngIf="(docSelected === 'any') || (docSelected === 'prototype')">
     <h4>Prototypes</h4>
@@ -506,8 +496,8 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
+                *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
             <td>{{ prototype.title | capitalizado }}</td>
             <td *ngIf="complete">{{ prototype.availability }}</td>
             <td *ngIf="complete">{{ prototype.institution }}</td>
@@ -526,13 +516,12 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" >
-            <th scope="row"></th>
-            <td>Title: {{ prototype.title | capitalizado }},
-                Availability: {{ prototype.availability }}, 
-                Institution: {{ prototype.institution }}, 
-                Year: {{ prototype.year }}, 
-                Authors: {{ prototype.author | autores }}
+                *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+            <th>{{ i + 1 }}</th>
+            <td>
+                {{ prototype.author | autores }}:<br/>
+                <strong>{{ prototype.title | capitalizado }}.</strong>
+                <span *ngIf="complete"> {{ prototype.availability }}, {{ prototype.institution }}.</span> ({{ prototype.year }})
             </td>
             </tr>
         </tbody>
