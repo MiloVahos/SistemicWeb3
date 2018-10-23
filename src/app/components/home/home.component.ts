@@ -1,3 +1,8 @@
+/**
+ * Developer: Juan Camilo Peña Vahos
+ * LastUpdate: 23/10/2018
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { Author } from '../../interfaces/author.interface';
 import { Book } from '../../interfaces/book.interface';
@@ -40,9 +45,13 @@ export class HomeComponent implements OnInit {
                 { doc: 'Conference Articles', type: 'conference' },
                 { doc: 'Thesis', type: 'thesis' },
                 { doc: 'Software', type: 'software' },
-                { doc: 'Prototypes', type: 'prototype' }];
+                { doc: 'Prototypes', type: 'prototype' },
+                { doc: 'Authors', type: 'author' }];
 
   docSelected = 'any';
+  searchYear = '';
+  searchTitle = '';
+  searchAuthor = '';
 
   list = true;
   code = false;

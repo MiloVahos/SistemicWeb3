@@ -29,7 +29,7 @@ export class AddConferenceComponent implements OnInit {
 
   // VARIABLES DE LA BASE DE DATOS
   private ConferencesCol: AngularFirestoreCollection<Conference>;
-  private ConferencesObs: Observable<Conference[]>;
+  public  ConferencesObs: Observable<Conference[]>;
   private ConferencesList: Conference[]  = [];
   private AuthorsNames: Array<string> = [];
 

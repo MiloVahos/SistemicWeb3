@@ -29,7 +29,7 @@ export class AddChapterComponent implements OnInit {
 
   // VARIABLES DE LA BASE DE DATOS
   private ChaptersCol: AngularFirestoreCollection<Chapter>;
-  private ChaptersObs: Observable<Chapter[]>;
+  public  ChaptersObs: Observable<Chapter[]>;
   private ChaptersList: Chapter[]  = [];
   private AuthorsNames: Array<string> = [];
 

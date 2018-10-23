@@ -29,7 +29,7 @@ export class AddJournalComponent implements OnInit {
 
   // VARIABLES DE LA BASE DE DATOS
   private JournalsCol: AngularFirestoreCollection<Journal>;
-  private JournalsObs: Observable<Journal[]>;
+  public  JournalsObs: Observable<Journal[]>;
   private JournalsList: Journal[]  = [];
   private AuthorsNames: Array<string> = [];
 

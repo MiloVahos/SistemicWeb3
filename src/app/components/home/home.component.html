@@ -6,14 +6,13 @@
         <div class="form-control-sm">
             <div class="col-md-8">
                 <select class="form-control-sm" [(ngModel)]="docSelected">
-                    <option [value]="any" disabled>Document Type</option>
+                    <option disabled>Document Type</option>
                     <option *ngFor="let document of documents"
                             [value]="document.type"> {{ document.doc }} </option>
                 </select>
             </div>
         </div>
     </ul>
-    <ul><strong>Filters:</strong></ul>
     <ul>
         <input  class="form-control-sm" 
                 type="text" placeholder="Title"

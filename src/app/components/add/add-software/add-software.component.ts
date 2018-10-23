@@ -29,7 +29,7 @@ export class AddSoftwareComponent implements OnInit {
 
   // VARIABLES DE LA BASE DE DATOS
   private SoftwaresCol: AngularFirestoreCollection<Software>;
-  private SoftwaresObs: Observable<Software[]>;
+  public  SoftwaresObs: Observable<Software[]>;
   private SoftwaresList: Software[]  = [];
   private AuthorsNames: Array<string> = [];
 

@@ -31,7 +31,7 @@ export class AddBookComponent implements OnInit {
 
   // VARIABLES DE LA BASE DE DATOS
   private BooksCol: AngularFirestoreCollection<Book>;  // COLECCIÓN DE AUTORES DE LA BASE DE DATOS
-  private BooksObs: Observable<Book[]>; // OBSERVABLE DONDE SE VAN A ALMACENAR LOS AUTORES
+  public  BooksObs: Observable<Book[]>; // OBSERVABLE DONDE SE VAN A ALMACENAR LOS AUTORES
   private BooksList: Book[]  = []; // CONTENDRÁ LOS AUTORES SI NO SE DESEAN COMO OBSERVABLE
   private AuthorsNames: Array<string> = []; // ARREGLO CON SOLO LOS NOMBRES DE LOS AUTORES
 

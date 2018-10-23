@@ -34,7 +34,6 @@ import { AuthService } from './services/auth.service';
 // COMPONENTES
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { AuthorComponent } from './components/author/author.component';
 import { AddAuthorComponent } from './components/add/add-author/add-author.component';
 import { AddBookComponent } from './components/add/add-book/add-book.component';
 import { AddChapterComponent } from './components/add/add-chapter/add-chapter.component';
@@ -54,7 +53,6 @@ import { LoginComponent } from './components/login/login.component';
     SearchByAuthorPipe,
     SearchByTitlePipe,
     SearchByYearPipe,
-    AuthorComponent,
     AddAuthorComponent,
     AddBookComponent,
     AddChapterComponent,

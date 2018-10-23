@@ -29,7 +29,7 @@ export class AddPrototypeComponent implements OnInit {
 
   // VARIABLES DE LA BASE DE DATOS
   private PrototypesCol: AngularFirestoreCollection<Prototype>;
-  private PrototypesObs: Observable<Prototype[]>;
+  public  PrototypesObs: Observable<Prototype[]>;
   private PrototypesList: Prototype[]  = [];
   private AuthorsNames: Array<string> = [];
 

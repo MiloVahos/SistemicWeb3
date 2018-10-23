@@ -29,7 +29,7 @@ export class AddThesisComponent implements OnInit {
 
   // VARIABLES DE LA BASE DE DATOS
   private ThesissCol: AngularFirestoreCollection<Thesis>;
-  private ThesissObs: Observable<Thesis[]>;
+  public  ThesissObs: Observable<Thesis[]>;
   private ThesissList: Thesis[]  = [];
   private AuthorsNames: Array<string> = [];
 
