@@ -3,7 +3,7 @@
  * LastUpdate: 23/10/2018
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Author } from '../../interfaces/author.interface';
 import { Book } from '../../interfaces/book.interface';
 import { Chapter } from '../../interfaces/chapter.interface';
@@ -12,14 +12,10 @@ import { Journal } from '../../interfaces/journal.interface';
 import { Thesis } from '../../interfaces/thesis.interface';
 import { Prototype } from '../../interfaces/prototypes.interface';
 import { Software } from '../../interfaces/software.interface';
-import { AuthorsService } from '../../services/authors.service';
-import { BooksService } from '../../services/books.service';
-import { ChaptersService } from '../../services/chapters.service';
-import { ConferencesService } from '../../services/conferences.service';
-import { JournalsService } from '../../services/journals.service';
-import { SoftwareService } from '../../services/software.service';
-import { PrototypesService } from '../../services/prototypes.service';
-import { ThesisService } from '../../services/thesis.service';
+
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+
 import { AuthService } from '../../services/auth.service';
 
 
@@ -27,16 +23,22 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  Authors:      Author[]      = [];
-  Books:        Book[]        = [];
-  Chapters:     Chapter[]     = [];
-  Conferences:  Conference[]  = [];
-  Journals:     Journal[]     = [];
-  Software:     Software[]    = [];
-  Prototypes:   Prototype[]   = [];
-  Thesis:       Thesis[]      = [];
+  private BooksCol: AngularFirestoreCollection<Book>;
+  public  BooksObs: Observable<Book[]>;
+  private ChaptersCol: AngularFirestoreCollection<Chapter>;
+  public  ChaptersObs: Observable<Chapter[]>;
+  private ConferencesCol: AngularFirestoreCollection<Conference>;
+  public  ConferencesObs: Observable<Conference[]>;
+  private JournalsCol: AngularFirestoreCollection<Journal>;
+  public  JournalsObs: Observable<Journal[]>;
+  private PrototypesCol: AngularFirestoreCollection<Prototype>;
+  public  PrototypesObs: Observable<Prototype[]>;
+  private SoftwaresCol: AngularFirestoreCollection<Software>;
+  public  SoftwaresObs: Observable<Software[]>;
+  private ThesissCol: AngularFirestoreCollection<Thesis>;
+  public  ThesissObs: Observable<Thesis[]>;
 
   documents = [ { doc: 'Any', type: 'any' },
                 { doc: 'Books', type: 'book' },
@@ -49,9 +51,18 @@ export class HomeComponent implements OnInit {
                 { doc: 'Authors', type: 'author' }];
 
   docSelected = 'any';
+  // Filtros generales
   searchYear = '';
   searchTitle = '';
   searchAuthor = '';
+  // Filtros para journals
+  searchJournal = '';
+  searchColciencias = '';
+  searchSjr = '';
+  // Filtros para conferences
+  searchConference = '';
+  // Filtros para thesis
+  searchType = '';
 
   list = true;
   code = false;
@@ -59,15 +70,23 @@ export class HomeComponent implements OnInit {
   complete = false;
   logged = false;
 
-  constructor(  private _booksService: BooksService,
-                private _chaptersService: ChaptersService,
-                private _authorsService: AuthorsService,
-                private _conferencesService: ConferencesService,
-                private _journalsService: JournalsService,
-                private _softwareService: SoftwareService,
-                private _prototypesService: PrototypesService,
-                private _thesisService: ThesisService,
+  constructor(  db: AngularFirestore,
                 public _authS: AuthService ) {
+
+    this.BooksCol = db.collection<Book>('BOOKS');
+    this.BooksObs = this.BooksCol.valueChanges();
+    this.ChaptersCol = db.collection<Chapter>('CHAPTERS');
+    this.ChaptersObs = this.ChaptersCol.valueChanges();
+    this.ConferencesCol = db.collection<Conference>('CONFERENCES');
+    this.ConferencesObs = this.ConferencesCol.valueChanges();
+    this.JournalsCol = db.collection<Journal>('JOURNALS');
+    this.JournalsObs = this.JournalsCol.valueChanges();
+    this.PrototypesCol = db.collection<Prototype>('PROTOTYPES');
+    this.PrototypesObs = this.PrototypesCol.valueChanges();
+    this.SoftwaresCol = db.collection<Software>('SOFTWARE');
+    this.SoftwaresObs = this.SoftwaresCol.valueChanges();
+    this.ThesissCol = db.collection<Thesis>('THESIS');
+    this.ThesissObs = this.ThesissCol.valueChanges();
 
     setTimeout ( () => {
       if ( this._authS.isUserEmailLoggedIn ) {
@@ -77,57 +96,6 @@ export class HomeComponent implements OnInit {
       }
     }, 1500);
 
-  }
-
-  ngOnInit() {
-    if ( this.Authors.length === 0 ) {
-      this.Authors  = this._authorsService.getAuthors();
-    } else {
-      this.Authors.length  = 0;
-      this.Authors  = this._authorsService.getAuthors();
-    }
-    if ( this.Books.length === 0 ) {
-      this.Books  = this._booksService.getBooks();
-    } else {
-      this.Books.length  = 0;
-      this.Books  = this._booksService.getBooks();
-    }
-    if ( this.Chapters.length === 0 ) {
-      this.Chapters  = this._chaptersService.getChapters();
-    } else {
-      this.Chapters.length  = 0;
-      this.Chapters  = this._chaptersService.getChapters();
-    }
-    if ( this.Conferences.length === 0 ) {
-      this.Conferences  = this._conferencesService.getConferences();
-    } else {
-      this.Conferences.length  = 0;
-      this.Conferences  = this._conferencesService.getConferences();
-    }
-    if ( this.Journals.length === 0 ) {
-      this.Journals  = this._journalsService.getJournals();
-    } else {
-      this.Journals.length  = 0;
-      this.Journals  = this._journalsService.getJournals();
-    }
-    if ( this.Prototypes.length === 0 ) {
-      this.Prototypes  = this._prototypesService.getPrototypes();
-    } else {
-      this.Prototypes.length  = 0;
-      this.Prototypes  = this._prototypesService.getPrototypes();
-    }
-    if ( this.Software.length === 0 ) {
-      this.Software  = this._softwareService.getSoftware();
-    } else {
-      this.Software.length  = 0;
-      this.Software  = this._softwareService.getSoftware();
-    }
-    if ( this.Thesis.length === 0 ) {
-      this.Thesis  = this._thesisService.getThesis();
-    } else {
-      this.Thesis.length  = 0;
-      this.Thesis  = this._thesisService.getThesis();
-    }
   }
 
   listView() {

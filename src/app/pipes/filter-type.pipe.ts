@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'searchByTitle'
+    name: 'searchByType'
 })
-export class SearchByTitlePipe implements PipeTransform {
+export class SearchByTypePipe implements PipeTransform {
 
   transform(documents: any[], searchText: string) {
 
@@ -11,7 +11,7 @@ export class SearchByTitlePipe implements PipeTransform {
         if (searchText == null) {
             return documents;
         } else {
-            return documents.filter( document => document.title
+            return documents.filter( document => document.type
                                             .toLocaleLowerCase()
                                             .indexOf(searchText.toLocaleLowerCase()) !== -1  );
         }

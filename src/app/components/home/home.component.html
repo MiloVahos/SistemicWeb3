@@ -1,6 +1,5 @@
 <h3>Sistemic Publications Database</h3>
 <hr>
-
 <div class="row">
     <ul>
         <div class="form-control-sm">
@@ -90,7 +89,7 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let book of BooksObs | async ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>{{ book.title | capitalizado }}</td>
             <td *ngIf="complete">{{ book.editorial | capitalizado }}</td>
@@ -109,7 +108,7 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index" >
+                *ngFor="let book of (BooksObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index" >
             <th>{{ i + 1 }}</th>
             <td>
                 {{ book.author | autores }}:<br/>
@@ -123,7 +122,7 @@
         
     <ul class="list-group" *ngIf="code">
         <li 
-            *ngFor="let book of (Books | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            *ngFor="let book of BooksObs | async" 
             class="list-group-item">
             <pre>{{ book | json }}</pre>
         </li>
@@ -153,7 +152,7 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let chapter of (ChaptersObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>{{ chapter.title | capitalizado }}</td>
             <td>{{ chapter.book | capitalizado }}</td>
@@ -174,7 +173,7 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let chapter of (ChaptersObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>
                 {{ chapter.author | autores }}:<br/>
@@ -189,7 +188,7 @@
         
     <ul class="list-group" *ngIf="code">
         <li 
-            *ngFor="let chapter of (Chapters | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            *ngFor="let chapter of (ChaptersObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
             class="list-group-item">
             <pre>{{ chapter | json }}</pre>
         </li>
@@ -205,6 +204,24 @@
             type="button" name="button">
             Edit Journals
     </button>
+
+    <div class="row" *ngIf="docSelected === 'journal'">
+        <ul>
+            <input  class="form-control-sm" 
+                    type="text" placeholder="Journal"
+                    [(ngModel)]="searchJournal" name="searchJournal">
+        </ul>
+        <ul>
+            <input  class="form-control-sm has-success" 
+                    type="text" placeholder="Colciencias Category" 
+                    [(ngModel)]="searchColciencias" name="searchColciencias">
+        </ul>
+        <ul>
+            <input  class="form-control-sm" 
+                    type="text" placeholder="SjR Category" 
+                    [(ngModel)]="searchSjr" name="searchSjr">
+        </ul>
+    </div>
 
     <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
         <thead>
@@ -224,7 +241,13 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let journal of (JournalsObs | async 
+                                                    | searchByAuthor: searchAuthor 
+                                                    | searchByYear: searchYear 
+                                                    | searchByTitle: searchTitle 
+                                                    | searchByJournal: searchJournal
+                                                    | searchByColciencias: searchColciencias
+                                                    | searchBySjr: searchSjr ) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>{{ journal.title | capitalizado }}</td>
             <td>{{ journal.journal | capitalizado }}</td>
@@ -249,7 +272,13 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index" >
+                *ngFor="let journal of (JournalsObs | async 
+                                                    | searchByAuthor: searchAuthor 
+                                                    | searchByYear: searchYear 
+                                                    | searchByTitle: searchTitle
+                                                    | searchByJournal: searchJournal
+                                                    | searchByColciencias: searchColciencias
+                                                    | searchBySjr: searchSjr ) ; let i = index" >
             <th>{{ i + 1 }}</th>
             <td>
                 {{ journal.author | autores }}:<br/>
@@ -265,7 +294,13 @@
         
     <ul class="list-group" *ngIf="code">
         <li 
-            *ngFor="let journal of (Journals | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            *ngFor="let journal of (JournalsObs | async 
+                                                | searchByAuthor: searchAuthor 
+                                                | searchByYear: searchYear 
+                                                | searchByTitle: searchTitle
+                                                | searchByJournal: searchJournal
+                                                | searchByColciencias: searchColciencias
+                                                | searchBySjr: searchSjr )" 
             class="list-group-item">
             <pre>{{ journal | json }}</pre>
         </li>
@@ -281,6 +316,14 @@
             type="button" name="button">
             Edit Conferences
     </button>
+
+    <div class="row" *ngIf="docSelected === 'conference'">
+        <ul>
+            <input  class="form-control-sm" 
+                    type="text" placeholder="Conference"
+                    [(ngModel)]="searchConference" name="searchConference">
+        </ul>
+    </div>
     
     <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
         <thead>
@@ -297,7 +340,11 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let conference of (ConferencesObs   | async 
+                                                            | searchByAuthor: searchAuthor 
+                                                            | searchByYear: searchYear 
+                                                            | searchByTitle: searchTitle
+                                                            | searchByConference: searchConference ) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>{{ conference.title | capitalizado }}</td>
             <td>{{ conference.conference | capitalizado }}</td>
@@ -319,7 +366,11 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let conference of ( ConferencesObs  | async 
+                                                            | searchByAuthor: searchAuthor 
+                                                            | searchByYear: searchYear 
+                                                            | searchByTitle: searchTitle 
+                                                            | searchByConference: searchConference ) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>
                 {{ conference.author | autores }}:<br/>
@@ -333,7 +384,11 @@
         
     <ul class="list-group" *ngIf="code">
         <li 
-            *ngFor="let conference of (Conferences | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            *ngFor="let conference of (ConferencesObs   | async 
+                                                        | searchByAuthor: searchAuthor 
+                                                        | searchByYear: searchYear 
+                                                        | searchByTitle: searchTitle
+                                                        | searchByConference: searchConference )" 
             class="list-group-item">
             <pre>{{ conference | json }}</pre>
         </li>
@@ -349,6 +404,14 @@
             type="button" name="button">
             Edit Thesis
     </button>
+
+    <div class="row" *ngIf="docSelected === 'thesis'">
+        <ul>
+            <input  class="form-control-sm" 
+                    type="text" placeholder="Type"
+                    [(ngModel)]="searchType" name="searchType">
+        </ul>
+    </div>
     
     <table class="table table-sm table-dark animated fadeIn" *ngIf="column">
         <thead>
@@ -364,7 +427,11 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let tesis of (ThesissObs    | async 
+                                                    | searchByAuthor: searchAuthor 
+                                                    | searchByYear: searchYear 
+                                                    | searchByTitle: searchTitle
+                                                    | searchByType: searchType ) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>{{ tesis.title | capitalizado }}</td>
             <td>{{ tesis.student | capitalizado }}</td>
@@ -385,7 +452,11 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let tesis of (ThesissObs    | async 
+                                                    | searchByAuthor: searchAuthor 
+                                                    | searchByYear: searchYear 
+                                                    | searchByTitle: searchTitle
+                                                    | searchByType: searchType ) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>
                 {{ tesis.author | autores }}:<br/>
@@ -399,7 +470,11 @@
         
     <ul class="list-group" *ngIf="code">
         <li 
-            *ngFor="let tesis of (Thesis | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            *ngFor="let tesis of (ThesissObs    | async 
+                                                | searchByAuthor: searchAuthor 
+                                                | searchByYear: searchYear 
+                                                | searchByTitle: searchTitle
+                                                | searchByType: searchType )" 
             class="list-group-item">
             <pre>{{ tesis | json }}</pre>
         </li>
@@ -430,7 +505,7 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let soft of (SoftwaresObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>{{ soft.title | capitalizado }}</td>
             <td>{{ soft.name }}</td>
@@ -451,7 +526,7 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let soft of (SoftwaresObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
             <td>{{ i + 1 }}</td>
             <td>
                 {{ soft.author | autores }}:<br/>
@@ -465,7 +540,7 @@
       
     <ul class="list-group" *ngIf="code">
         <li 
-            *ngFor="let soft of (Software | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            *ngFor="let soft of (SoftwaresObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
             class="list-group-item">
             <pre>{{ soft | json }}</pre>
         </li>
@@ -495,7 +570,7 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let prototype of (PrototypesObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>{{ prototype.title | capitalizado }}</td>
             <td *ngIf="complete">{{ prototype.availability }}</td>
@@ -515,7 +590,7 @@
         </thead>
         <tbody>
             <tr class="animated fadeIn"
-                *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
+                *ngFor="let prototype of (PrototypesObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle) ; let i = index">
             <th>{{ i + 1 }}</th>
             <td>
                 {{ prototype.author | autores }}:<br/>
@@ -528,7 +603,7 @@
         
     <ul class="list-group" *ngIf="code">
         <li 
-            *ngFor="let prototype of (Prototypes | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
+            *ngFor="let prototype of (PrototypesObs | async | searchByAuthor: searchAuthor | searchByYear: searchYear | searchByTitle: searchTitle)" 
             class="list-group-item">
             <pre>{{ prototype | json }}</pre>
         </li>

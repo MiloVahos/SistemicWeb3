@@ -19,16 +19,14 @@ import { AutoresPipe } from './pipes/autores.pipe';
 import { SearchByAuthorPipe } from './pipes/filter-authors.pipe';
 import { SearchByYearPipe } from './pipes/filter-year-pipe';
 import { SearchByTitlePipe } from './pipes/filter-title-pipe';
+import { SearchByJournalPipe } from './pipes/filter-journal.pipe';
+import { SearchByColcienciasPipe } from './pipes/filter-colciencias.pipe';
+import { SearchBySjrPipe } from './pipes/filter-sjr.pipe';
+import { SearchByConferencePipe } from './pipes/filter-conference.pipe';
+import { SearchByTypePipe } from './pipes/filter-type.pipe';
 
 // SERVICES
-import { BooksService } from './services/books.service';
 import { AuthorsService } from './services/authors.service';
-import { ChaptersService } from './services/chapters.service';
-import { ConferencesService } from './services/conferences.service';
-import { JournalsService } from './services/journals.service';
-import { ThesisService } from './services/thesis.service';
-import { SoftwareService } from './services/software.service';
-import { PrototypesService } from './services/prototypes.service';
 import { AuthService } from './services/auth.service';
 
 // COMPONENTES
@@ -44,6 +42,7 @@ import { AddSoftwareComponent } from './components/add/add-software/add-software
 import { AddPrototypeComponent } from './components/add/add-prototype/add-prototype.component';
 import { LoginComponent } from './components/login/login.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +52,11 @@ import { LoginComponent } from './components/login/login.component';
     SearchByAuthorPipe,
     SearchByTitlePipe,
     SearchByYearPipe,
+    SearchByJournalPipe,
+    SearchByColcienciasPipe,
+    SearchBySjrPipe,
+    SearchByConferencePipe,
+    SearchByTypePipe,
     AddAuthorComponent,
     AddBookComponent,
     AddChapterComponent,
@@ -76,14 +80,7 @@ import { LoginComponent } from './components/login/login.component';
     AngularFireAuthModule
   ],
   providers: [
-    BooksService,
     AuthorsService,
-    ChaptersService,
-    ConferencesService,
-    JournalsService,
-    ThesisService,
-    SoftwareService,
-    PrototypesService,
     AuthService
   ],
   bootstrap: [AppComponent]

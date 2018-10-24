@@ -7,12 +7,14 @@ export class SearchByAuthorPipe implements PipeTransform {
 
   transform(documents: any[], searchText: string) {
 
-    if (searchText == null) {
-        return documents;
-    } else {
-        return documents.filter( document => document.author
-                                        .toLocaleLowerCase()
-                                        .indexOf(searchText.toLocaleLowerCase()) !== -1 );
+    if ( documents != null ) {
+        if (searchText == null) {
+            return documents;
+        } else {
+            return documents.filter( document => document.author
+                                            .toLocaleLowerCase()
+                                            .indexOf(searchText.toLocaleLowerCase()) !== -1 );
+        }
     }
   }
 
