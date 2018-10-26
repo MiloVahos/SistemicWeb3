@@ -4,7 +4,6 @@
  */
 
 import { Component } from '@angular/core';
-import { Author } from '../../interfaces/author.interface';
 import { Book } from '../../interfaces/book.interface';
 import { Chapter } from '../../interfaces/chapter.interface';
 import { Conference } from '../../interfaces/conference.interface';
@@ -47,8 +46,7 @@ export class HomeComponent {
                 { doc: 'Conference Articles', type: 'conference' },
                 { doc: 'Thesis', type: 'thesis' },
                 { doc: 'Software', type: 'software' },
-                { doc: 'Prototypes', type: 'prototype' },
-                { doc: 'Authors', type: 'author' }];
+                { doc: 'Prototypes', type: 'prototype' }];
 
   docSelected = 'any';
   // Filtros generales
