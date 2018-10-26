@@ -28,6 +28,7 @@ import { SearchByTypePipe } from './pipes/filter-type.pipe';
 // SERVICES
 import { AuthorsService } from './services/authors.service';
 import { AuthService } from './services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 // COMPONENTES
 import { AppComponent } from './app.component';
@@ -81,7 +82,8 @@ import { LoginComponent } from './components/login/login.component';
   ],
   providers: [
     AuthorsService,
-    AuthService
+    AuthService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

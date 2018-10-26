@@ -16,6 +16,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -69,7 +70,8 @@ export class HomeComponent {
   logged = false;
 
   constructor(  db: AngularFirestore,
-                public _authS: AuthService ) {
+                public _authS: AuthService,
+                private cookieService: CookieService ) {
 
     this.BooksCol = db.collection<Book>('BOOKS');
     this.BooksObs = this.BooksCol.valueChanges();
@@ -93,6 +95,8 @@ export class HomeComponent {
         this.logged = false;
       }
     }, 1500);
+
+    this.cookieService.deleteAll();
 
   }
 

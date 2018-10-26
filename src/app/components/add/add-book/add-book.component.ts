@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Book } from '../../../interfaces/book.interface';
 import { AuthService } from '../../../services/auth.service';
 import { AuthorsService } from '../../../services/authors.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 
@@ -35,12 +36,12 @@ export class AddBookComponent implements OnInit {
   private BooksList: Book[]  = []; // CONTENDRÁ LOS AUTORES SI NO SE DESEAN COMO OBSERVABLE
   private AuthorsNames: Array<string> = []; // ARREGLO CON SOLO LOS NOMBRES DE LOS AUTORES
 
-
   constructor(  private router: Router,
                 private _authS: AuthService,
                 private _authorsService: AuthorsService,
                 private db: AngularFirestore,
-                private modalService: NgbModal
+                private modalService: NgbModal,
+                private cookieService: CookieService
               ) {
 
     if ( !this._authS.isUserEmailLoggedIn ) {
@@ -67,6 +68,7 @@ export class AddBookComponent implements OnInit {
         this.BooksList.push(book);
       });
     });
+    this.checkCookies();
   }
 
   saveBook() {
@@ -87,6 +89,7 @@ export class AddBookComponent implements OnInit {
       this.showError$ = timer(200).pipe( map(() => true), share() );
     });
 
+    this.cookieService.deleteAll();
     this.forma.reset({
       title: '',
       editorial: '',
@@ -140,6 +143,7 @@ export class AddBookComponent implements OnInit {
     }
     this.updatedID  = '';
     this.updateMode = false;
+    this.cookieService.deleteAll();
   }
 
   // DELETE
@@ -192,6 +196,34 @@ export class AddBookComponent implements OnInit {
 
   getUniqueId() {
     return '_' + Math.random().toString(36).substr(2, 9) + (new Date()).getTime().toString(36);
+  }
+
+  get formAuthors() { return <FormArray>this.forma.get('authors'); }
+
+  checkCookies() {
+    if ( this.cookieService.check('TITLE') ) {
+      this.forma.controls['title'].setValue( this.cookieService.get('TITLE') );
+    }
+
+    if ( this.cookieService.check('EDITORIAL') ) {
+      this.forma.controls['editorial'].setValue( this.cookieService.get('EDITORIAL') );
+    }
+
+    if ( this.cookieService.check('YEAR') ) {
+      this.forma.controls['year'].setValue( this.cookieService.get('YEAR') );
+    }
+
+    this.forma.controls['title'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'TITLE', data );
+    });
+
+    this.forma.controls['editorial'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'EDITORIAL', data );
+    });
+
+    this.forma.controls['year'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'YEAR', data );
+    });
   }
 
 }

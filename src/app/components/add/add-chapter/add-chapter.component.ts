@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Chapter } from '../../../interfaces/chapter.interface';
 import { AuthService } from '../../../services/auth.service';
 import { AuthorsService } from '../../../services/authors.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,7 +38,8 @@ export class AddChapterComponent implements OnInit {
                 private _authS: AuthService,
                 private _authorsService: AuthorsService,
                 private db: AngularFirestore,
-                private modalService: NgbModal
+                private modalService: NgbModal,
+                private cookieService: CookieService
             ) {
 
     if ( !this._authS.isUserEmailLoggedIn ) {
@@ -67,6 +69,7 @@ export class AddChapterComponent implements OnInit {
         this.ChaptersList.push(chapter);
       });
     });
+    this.checkCookies();
   }
 
   saveChapter() {
@@ -203,6 +206,50 @@ export class AddChapterComponent implements OnInit {
 
   getUniqueId() {
     return '_' + Math.random().toString(36).substr(2, 9) + (new Date()).getTime().toString(36);
+  }
+
+  get formAuthors() { return <FormArray>this.forma.get('authors'); }
+
+  checkCookies() {
+    if ( this.cookieService.check('TITLE') ) {
+      this.forma.controls['title'].setValue( this.cookieService.get('TITLE') );
+    }
+
+    if ( this.cookieService.check('BOOK') ) {
+      this.forma.controls['book'].setValue( this.cookieService.get('BOOK') );
+    }
+
+    if ( this.cookieService.check('PAGES') ) {
+      this.forma.controls['pages'].setValue( this.cookieService.get('PAGES') );
+    }
+
+    if ( this.cookieService.check('EDITORIAL') ) {
+      this.forma.controls['editorial'].setValue( this.cookieService.get('EDITORIAL') );
+    }
+
+    if ( this.cookieService.check('YEAR') ) {
+      this.forma.controls['year'].setValue( this.cookieService.get('YEAR') );
+    }
+
+    this.forma.controls['title'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'TITLE', data );
+    });
+
+    this.forma.controls['book'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'BOOK', data );
+    });
+
+    this.forma.controls['pages'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'PAGES', data );
+    });
+
+    this.forma.controls['editorial'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'EDITORIAL', data );
+    });
+
+    this.forma.controls['year'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'YEAR', data );
+    });
   }
 
 }
