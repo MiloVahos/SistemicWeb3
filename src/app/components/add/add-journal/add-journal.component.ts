@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Journal } from '../../../interfaces/journal.interface';
 import { AuthService } from '../../../services/auth.service';
 import { AuthorsService } from '../../../services/authors.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,7 +38,8 @@ export class AddJournalComponent implements OnInit {
                 private _authS: AuthService,
                 private _authorsService: AuthorsService,
                 private db: AngularFirestore,
-                private modalService: NgbModal
+                private modalService: NgbModal,
+                private cookieService: CookieService
             ) {
 
     if ( !this._authS.isUserEmailLoggedIn ) {
@@ -71,6 +73,7 @@ export class AddJournalComponent implements OnInit {
         this.JournalsList.push(journal);
       });
     });
+    this.checkCookies();
   }
 
   saveJournal() {
@@ -113,6 +116,7 @@ export class AddJournalComponent implements OnInit {
     while ((<FormArray>this.forma.controls['authors']).length !== 1) {
       (<FormArray>this.forma.controls['authors']).removeAt(0);
     }
+    this.cookieService.deleteAll();
   }
 
   updateJournal ( journal: Journal ) {
@@ -174,6 +178,7 @@ export class AddJournalComponent implements OnInit {
     }
     this.updatedID  = '';
     this.updateMode = false;
+    this.cookieService.deleteAll();
   }
 
   // DELETE
@@ -223,8 +228,85 @@ export class AddJournalComponent implements OnInit {
         : this.AuthorsNames.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
 
-    getUniqueId() {
-      return '_' + Math.random().toString(36).substr(2, 9) + (new Date()).getTime().toString(36);
+  getUniqueId() {
+    return '_' + Math.random().toString(36).substr(2, 9) + (new Date()).getTime().toString(36);
+  }
+
+  get formAuthors() { return <FormArray>this.forma.get('authors'); }
+
+  checkCookies() {
+
+    if ( this.cookieService.check('TITLE') ) {
+      this.forma.controls['title'].setValue( this.cookieService.get('TITLE') );
     }
+
+    if ( this.cookieService.check('JOURNAL') ) {
+      this.forma.controls['journal'].setValue( this.cookieService.get('JOURNAL') );
+    }
+
+    if ( this.cookieService.check('NUMBER') ) {
+      this.forma.controls['number'].setValue( this.cookieService.get('NUMBER') );
+    }
+
+    if ( this.cookieService.check('VOLUME') ) {
+      this.forma.controls['volume'].setValue( this.cookieService.get('VOLUME') );
+    }
+
+    if ( this.cookieService.check('PAGES') ) {
+      this.forma.controls['pages'].setValue( this.cookieService.get('PAGES') );
+    }
+
+    if ( this.cookieService.check('URL') ) {
+      this.forma.controls['url'].setValue( this.cookieService.get('URL') );
+    }
+
+    if ( this.cookieService.check('COLCAT') ) {
+      this.forma.controls['colCat'].setValue( this.cookieService.get('COLCAT') );
+    }
+
+    if ( this.cookieService.check('SJRCAT') ) {
+      this.forma.controls['sjrCat'].setValue( this.cookieService.get('SJRCAT') );
+    }
+
+    if ( this.cookieService.check('YEAR') ) {
+      this.forma.controls['year'].setValue( this.cookieService.get('YEAR') );
+    }
+
+    this.forma.controls['title'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'TITLE', data );
+    });
+
+    this.forma.controls['journal'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'JOURNAL', data );
+    });
+
+    this.forma.controls['number'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'NUMBER', data );
+    });
+
+    this.forma.controls['volume'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'VOLUME', data );
+    });
+
+    this.forma.controls['pages'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'PAGES', data );
+    });
+
+    this.forma.controls['url'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'URL', data );
+    });
+
+    this.forma.controls['colCat'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'COLCAT', data );
+    });
+
+    this.forma.controls['sjrCat'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'SJRCAT', data );
+    });
+
+    this.forma.controls['year'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'YEAR', data );
+    });
+  }
 
 }

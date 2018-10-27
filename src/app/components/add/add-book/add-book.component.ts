@@ -88,8 +88,6 @@ export class AddBookComponent implements OnInit {
     .catch((err) => {
       this.showError$ = timer(200).pipe( map(() => true), share() );
     });
-
-    this.cookieService.deleteAll();
     this.forma.reset({
       title: '',
       editorial: '',
@@ -99,7 +97,7 @@ export class AddBookComponent implements OnInit {
     while ((<FormArray>this.forma.controls['authors']).length !== 1) {
       (<FormArray>this.forma.controls['authors']).removeAt(0);
     }
-
+    this.cookieService.deleteAll();
   }
 
   // UPDATE

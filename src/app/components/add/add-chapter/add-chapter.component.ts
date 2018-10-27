@@ -103,6 +103,7 @@ export class AddChapterComponent implements OnInit {
     while ((<FormArray>this.forma.controls['authors']).length !== 1) {
       (<FormArray>this.forma.controls['authors']).removeAt(0);
     }
+    this.cookieService.deleteAll();
   }
 
   // UPDATE
@@ -153,6 +154,7 @@ export class AddChapterComponent implements OnInit {
     }
     this.updatedID  = '';
     this.updateMode = false;
+    this.cookieService.deleteAll();
   }
 
   // DELETE

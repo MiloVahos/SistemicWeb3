@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { Conference } from '../../../interfaces/conference.interface';
 import { AuthService } from '../../../services/auth.service';
 import { AuthorsService } from '../../../services/authors.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,7 +38,8 @@ export class AddConferenceComponent implements OnInit {
                 private _authS: AuthService,
                 private _authorsService: AuthorsService,
                 private db: AngularFirestore,
-                private modalService: NgbModal
+                private modalService: NgbModal,
+                private cookieService: CookieService
             ) {
 
     if ( !this._authS.isUserEmailLoggedIn ) {
@@ -68,6 +70,7 @@ export class AddConferenceComponent implements OnInit {
         this.ConferencesList.push(conference);
       });
     });
+    this.checkCookies();
   }
 
   saveConference() {
@@ -103,6 +106,7 @@ export class AddConferenceComponent implements OnInit {
     while ((<FormArray>this.forma.controls['authors']).length !== 1) {
       (<FormArray>this.forma.controls['authors']).removeAt(0);
     }
+    this.cookieService.deleteAll();
   }
 
    // UPDATE
@@ -156,6 +160,7 @@ export class AddConferenceComponent implements OnInit {
     }
     this.updatedID  = '';
     this.updateMode = false;
+    this.cookieService.deleteAll();
   }
 
   // DELETE
@@ -207,6 +212,58 @@ export class AddConferenceComponent implements OnInit {
 
   getUniqueId() {
     return '_' + Math.random().toString(36).substr(2, 9) + (new Date()).getTime().toString(36);
+  }
+
+  get formAuthors() { return <FormArray>this.forma.get('authors'); }
+
+  checkCookies() {
+    if ( this.cookieService.check('TITLE') ) {
+      this.forma.controls['title'].setValue( this.cookieService.get('TITLE') );
+    }
+
+    if ( this.cookieService.check('CONFERENCE') ) {
+      this.forma.controls['conference'].setValue( this.cookieService.get('CONFERENCE') );
+    }
+
+    if ( this.cookieService.check('PAGES') ) {
+      this.forma.controls['pages'].setValue( this.cookieService.get('PAGES') );
+    }
+
+    if ( this.cookieService.check('URL') ) {
+      this.forma.controls['url'].setValue( this.cookieService.get('URL') );
+    }
+
+    if ( this.cookieService.check('AMBIT') ) {
+      this.forma.controls['ambit'].setValue( this.cookieService.get('AMBIT') );
+    }
+
+    if ( this.cookieService.check('YEAR') ) {
+      this.forma.controls['year'].setValue( this.cookieService.get('YEAR') );
+    }
+
+    this.forma.controls['title'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'TITLE', data );
+    });
+
+    this.forma.controls['conference'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'CONFERENCE', data );
+    });
+
+    this.forma.controls['pages'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'PAGES', data );
+    });
+
+    this.forma.controls['url'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'URL', data );
+    });
+
+    this.forma.controls['ambit'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'AMBIT', data );
+    });
+
+    this.forma.controls['year'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'YEAR', data );
+    });
   }
 
 }

@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, map, share} from 'rxjs/operators';
 import { AuthorsService } from '../../../services/authors.service';
 import { Thesis } from '../../../interfaces/thesis.interface';
 import { AuthService } from '../../../services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,7 +38,8 @@ export class AddThesisComponent implements OnInit {
                 private _authS: AuthService,
                 private _authorsService: AuthorsService,
                 private db: AngularFirestore,
-                private modalService: NgbModal
+                private modalService: NgbModal,
+                private cookieService: CookieService
             ) {
 
     if ( !this._authS.isUserEmailLoggedIn ) {
@@ -66,6 +68,7 @@ export class AddThesisComponent implements OnInit {
         this.ThesissList.push(thesis);
       });
     });
+    this.checkCookies();
   }
 
   saveThesis() {
@@ -100,6 +103,7 @@ export class AddThesisComponent implements OnInit {
     while ((<FormArray>this.forma.controls['authors']).length !== 1) {
       (<FormArray>this.forma.controls['authors']).removeAt(0);
     }
+    this.cookieService.deleteAll();
   }
 
   // UPDATE
@@ -150,6 +154,7 @@ export class AddThesisComponent implements OnInit {
     }
     this.updatedID  = '';
     this.updateMode = false;
+    this.cookieService.deleteAll();
   }
 
    // DELETE
@@ -203,6 +208,52 @@ export class AddThesisComponent implements OnInit {
   getUniqueId() {
     return '_' + Math.random().toString(36).substr(2, 9) + (new Date()).getTime().toString(36);
   }
+
+  get formAuthors() { return <FormArray>this.forma.get('authors'); }
+
+  checkCookies() {
+
+    if ( this.cookieService.check('TITLE') ) {
+      this.forma.controls['title'].setValue( this.cookieService.get('TITLE') );
+    }
+
+    if ( this.cookieService.check('STUDENT') ) {
+      this.forma.controls['student'].setValue( this.cookieService.get('STUDENT') );
+    }
+
+    if ( this.cookieService.check('TYPE') ) {
+      this.forma.controls['type'].setValue( this.cookieService.get('TYPE') );
+    }
+
+    if ( this.cookieService.check('UNIVERSITY') ) {
+      this.forma.controls['university'].setValue( this.cookieService.get('UNIVERSITY') );
+    }
+
+    if ( this.cookieService.check('YEAR') ) {
+      this.forma.controls['year'].setValue( this.cookieService.get('YEAR') );
+    }
+
+    this.forma.controls['title'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'TITLE', data );
+    });
+
+    this.forma.controls['student'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'STUDENT', data );
+    });
+
+    this.forma.controls['type'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'TYPE', data );
+    });
+
+    this.forma.controls['university'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'UNIVERSITY', data );
+    });
+
+    this.forma.controls['year'].valueChanges.subscribe( data => {
+      this.cookieService.set( 'YEAR', data );
+    });
+  }
+
 
 }
 
